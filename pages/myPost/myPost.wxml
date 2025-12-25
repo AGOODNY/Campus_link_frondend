@@ -1,0 +1,57 @@
+<!--pages/myPost/myPost.wxml-->
+<view class="page">
+<view class="head">My Posts</view>
+
+  <!-- 空状态 -->
+  <view
+    class="empty"
+    wx:if="{{leftList.length === 0 && rightList.length === 0}}"
+  >
+    <text class="empty-text">No posts.</text>
+  </view>
+
+<!-- 瀑布流容器 -->
+<view class="waterfall">
+
+  <!-- 左列 -->
+  <view class="column">
+    <block wx:for="{{leftList}}" wx:key="id">
+      <view class="card" bindtap="goDetail" data-id="{{item.id}}">
+        
+        <image class="cover" src="{{item.cover}}" mode="widthFix" />
+
+        <view class="content">
+          <view class="title">{{item.title}}</view>
+
+          <view class="user">
+            <image class="avatar" src="{{item.avatar}}" />
+            <text class="nickname">{{item.nickname}}</text>
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+  <!-- 右列 -->
+  <view class="column">
+    <block wx:for="{{rightList}}" wx:key="id">
+      <view class="card" bindtap="goDetail" data-id="{{item.id}}">
+        
+        <image class="cover" src="{{item.cover}}" mode="widthFix" />
+
+        <view class="content">
+          <view class="title">{{item.title}}</view>
+
+          <view class="user">
+            <image class="avatar" src="{{item.avatar}}" />
+            <text class="nickname">{{item.nickname}}</text>
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+</view>
+</view>

@@ -1,0 +1,155 @@
+<!-- pages/compous_index/compous_index.wxml -->
+
+<!-- Tab栏 -->
+<view class="tab-bar">
+  <view class="tab-list">
+    <view 
+      wx:for="{{tabs}}" 
+      wx:key="id" 
+      wx:for-index="index"  
+      class="tab-item {{currentTab === index ? 'active' : ''}}"
+      data-index="{{index}}" 
+      bindtap="switchTab"
+    >
+      <text class="tab-text">{{item.name}}</text>
+      <!-- 添加蓝线指示器 -->
+      <view class="tab-indicator" wx:if="{{currentTab === index}}"></view>
+    </view>
+  </view>
+</view>
+
+<!-- 页面内容 -->
+<view class="page-content" style="padding-top: {{contentPadding}}px;">
+  
+  <!-- 搜索框 -->
+  <view class="search-container">
+    <view class="search-box">
+      <image src="/pages/compous_index/compous_image/search.png" class="search-icon" />
+      <input placeholder="Search..." class="search-input" />
+    </view>
+  </view>
+  
+  <!-- 轮播图 -->
+  <swiper class="custom-swiper"
+          indicator-dots="{{indicatorDots}}"
+          autoplay="{{autoplay}}"
+          interval="{{interval}}"
+          duration="{{duration}}"
+          circular="{{circular}}"
+          bindchange="onSwiperChange">
+    <swiper-item wx:for="{{swiperList}}" wx:key="id">
+      <image src="{{item.imageUrl}}" class="swiper-image" 
+             data-index="{{index}}" bindtap="onSwiperTap" mode="aspectFill" />
+      <view class="swiper-text-overlay">
+        <text class="swiper-title">{{item.title}}</text>
+        <text class="swiper-desc">{{item.desc}}</text>
+      </view>
+    </swiper-item>
+  </swiper>
+  
+  <!-- 推荐区域 -->
+  <view class="recommendation-container">
+  <view class="recommendation-wrapper" bindtap="toggleSortMenu">
+    <image 
+      src="/pages/compous_index/compous_image/sort.png" 
+      class="recommend-icon" 
+    />
+    <text class="recommend-text">Recommendation</text>
+  </view>
+
+  
+  <!-- 下拉菜单 -->
+<view class="sort-menu" wx:if="{{showSortMenu}}">
+  <view 
+    class="sort-item {{sortType === 'hot' ? 'active' : ''}}"
+    bindtap="selectSort"
+    data-type="hot"
+  >
+    hot
+  </view>
+  <view 
+    class="sort-item {{sortType === 'time' ? 'active' : ''}}"
+    bindtap="selectSort"
+    data-type="new"
+  >
+    post-time
+  </view>
+</view>
+
+</view>
+  
+  <!-- 瀑布流帖子 -->
+  <view class="waterfall-wrapper">
+    <!-- 左列 -->
+    <view class="waterfall-column left">
+      <view class="post-item" 
+            wx:for="{{leftColumn}}" 
+            wx:key="id"
+            data-id="{{item.id}}"
+            bindtap="onPostTap">
+        <view class="post-image-wrapper">
+          <image class="post-image" 
+                 src="{{item.images[0]}}" 
+                 mode="aspectFill" 
+                 lazy-load="{{true}}" />
+        </view>
+        <view class="post-info">
+          <text class="post-title">{{item.title}}</text>
+          <text class="post-desc">{{item.desc}}</text>
+          <view class="user-info">
+            <image class="user-avatar" src="{{item.user.avatar}}" />
+            <text class="user-name">{{item.user.name}}</text>
+            <text class="post-time">{{item.time}}</text>
+          </view>
+          <view class="post-stats">
+            <text class="stat-item">♥ {{item.likes}}</text>
+            <text class="stat-item">💬 {{item.comments}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 右列 -->
+<view class="waterfall-column right">
+  <view class="post-item" 
+        wx:for="{{rightColumn}}" 
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onPostTap">
+
+    <view class="post-image-wrapper">
+      <image class="post-image" 
+             src="{{item.images[0]}}" 
+             mode="aspectFill" 
+             lazy-load="{{true}}" />
+    </view>
+
+    <view class="post-info">
+      <text class="post-title">{{item.title}}</text>
+      <text class="post-desc">{{item.desc}}</text>
+
+      <view class="user-info">
+        <image class="user-avatar" src="{{item.user.avatar}}" />
+        <text class="user-name">{{item.user.name}}</text>
+        <text class="post-time">{{item.time}}</text>
+      </view>
+
+      <view class="post-stats">
+        <text class="stat-item">♥ {{item.likes}}</text>
+        <text class="stat-item">💬 {{item.comments}}</text>
+      </view>
+    </view>
+
+  </view>
+</view>
+  </view>
+  
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>Loading...</text>
+  </view>
+  
+  <view wx:if="{{!hasMore && postList.length > 0}}" class="no-more">
+    <text>-The end-</text>
+  </view>
+</view>

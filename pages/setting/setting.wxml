@@ -1,0 +1,14 @@
+<!--pages/setting/setting.wxml-->
+<view class="profile">
+  <view class="title">Avatar</view>
+    <button class="avatar" open-type="chooseAvatar"   bindchooseavatar="choosePhoto">
+      <image src="{{photo}}" class= "pic"/>
+    </button>
+</view>
+
+<view class="nickname">
+  <view class="title">Nickname</view>
+  <input class="input" type="nickname" placeholder="Please enter your nickname" model:value="{{username}}"/>
+</view>
+
+<button class="submit" plain bind:tap="onSave">Save</button>

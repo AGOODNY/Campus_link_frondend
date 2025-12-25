@@ -1,0 +1,66 @@
+/* pages/login/login.wxss */
+/* pages/login/login.wxss */
+
+.container {
+  min-height: 100vh;
+  padding: 80rpx 40rpx;
+  box-sizing: border-box;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 角色选择 */
+.role-chioce {
+  background: #ffffff;
+  padding: 40rpx;
+  border-radius: 20rpx;
+  margin-bottom: 60rpx;
+  box-shadow: 0 12rpx 30rpx rgba(0, 0, 0, 0.05);
+}
+
+.role-chioce text {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+/* 单个角色 */
+.role-item {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #555;
+  margin-bottom: 24rpx;
+}
+
+.role-item:last-child {
+  margin-bottom: 0;
+}
+
+.role-item radio {
+  margin-right: 20rpx;
+}
+
+/* 登录按钮 */
+.log-in {
+  text-align: center;
+}
+
+.log-in button {
+  width: 100%;
+  height: 90rpx;
+  line-height: 65rpx;
+  border-radius: 44rpx;
+  background: #1e90ff;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.log-in button:active {
+  opacity: 0.85;
+}

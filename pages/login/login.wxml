@@ -1,0 +1,20 @@
+<!--pages/profile/profile.wxml--> 
+<view class="container"> 
+<!--Choose Role-->
+ <view class="role-chioce"> 
+ <text>Please choose your role.</text> 
+ <radio-group bindchange="onRoleChange"> 
+ <label class="role-item">
+  <radio value="student" color="#1e90ff" checked="{{role === 'student'}}" /> Student 
+  </label> 
+
+  <label class="role-item"> 
+  <radio value="staff" color="#1e90ff" checked="{{role === 'staff'}}" /> Staff </label>
+   </radio-group> 
+   </view>
+    <!-- Log in --> 
+    <view class="log-in"> 
+   <button bindtap="wechatLogin"> Click to log in </button> 
+   </view> <!-- Profile --> <view> 
+   </view> 
+   </view>

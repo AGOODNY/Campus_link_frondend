@@ -1,0 +1,81 @@
+/* pages/myProblem/myProblem.wxss */
+page {
+  background-color: #f5f6f7;
+}
+
+.page {
+  padding: 20rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 头部 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  margin-right: 14rpx;
+}
+
+.nickname {
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* 状态标签 */
+.status {
+  font-size: 24rpx;
+  padding: 6rpx 20rpx;
+  border-radius: 30rpx;
+  color: #fff;
+}
+
+.status.pending {
+  background-color: #ff9f1a;
+}
+
+.status.reported {
+  background-color: #409eff;
+}
+
+.status.solved {
+  background-color: #07c160;
+}
+
+/* 内容 */
+.content {
+  font-size: 30rpx;
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+}
+
+/* 图片 */
+.img {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+/* 时间 */
+.time {
+  font-size: 24rpx;
+  color: #999;
+}

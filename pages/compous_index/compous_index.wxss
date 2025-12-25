@@ -1,0 +1,426 @@
+/* pages/compous_index/compous_index.wxss */
+
+/* ========== Tab分栏样式 ========== */
+
+.tab-bar {
+   
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: white;
+    border-bottom: 1rpx solid #f0f0f0;
+    display: flex;
+    justify-content: center; /* 让内容居中 */
+  }
+  
+  .tab-scroll {
+    white-space: nowrap;
+    width: auto; /* 改为auto，让内容决定宽度 */
+    max-width: 100%; /* 防止溢出 */
+  }
+  
+  .tab-list {
+    display: inline-flex;
+    padding: 0 20rpx; /* 减少内边距 */
+    justify-content: center; /* 水平居中 */
+  }
+  
+  .tab-item {
+    position: relative;
+    padding: 24rpx 24rpx; /* 减小左右内边距 */
+    font-size: 28rpx; /* 稍微减小字体 */
+    color: #666;
+    text-align: center;
+    transition: all 0.3s;
+    display: inline-block;
+    flex-shrink: 0; /* 防止压缩 */
+  }
+  
+  .tab-item.active {
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .tab-text {
+    display: block;
+  }
+  
+  .tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40rpx;
+    height: 4rpx;
+    background: #1e90ff;
+    border-radius: 2rpx;
+  }
+  
+  /* ========== 页面内容区域 ========== */
+  .page-content {
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: calc(88rpx + 80rpx + 20px); /* 导航栏高度 + Tab栏高度 + 状态栏高度 */
+    z-index: 1;
+  }
+  
+
+  
+  /* 搜索框容器 */
+  .search-container {
+    padding: 42rpx 32rpx 12rpx 32rpx; /* 上右下左，下边距12rpx */
+    box-sizing: border-box;
+  }
+  
+  /* 搜索框主体 */
+  .search-box {
+    width: 660rpx;
+    height: 80rpx;
+    background-color: rgba(243,249,255,1);
+    border-radius: 16rpx;
+    margin: 0 auto; /* 水平居中 */
+    display: flex;
+    align-items: center;
+    padding: 0 24rpx;
+    box-sizing: border-box;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  }
+  
+  /* 搜索图标 */
+  .search-icon {
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 16rpx;
+    opacity: 0.6;
+  }
+  
+  /* 输入框 */
+  .search-input {
+    flex: 1;
+    height: 100%;
+    font-size: 28rpx;
+    color: #333;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+  
+  /* 占位符样式 */
+  .placeholder-style {
+    color: #999;
+    font-size: 28rpx;
+  }
+  
+  /* 轮播图容器 */
+  .swiper-wrapper {
+    background: rgba(0,0,255,0.15);
+    z-index: 1;
+    padding: 0 32rpx 32rpx 32rpx; /* 上右下左，与搜索框对齐 */
+    box-sizing: border-box;
+    height: 280rpx;   /* 关键：必须和 swiper 一致 */
+    overflow: hidden; /* 限制覆盖范围 */
+  }
+  
+  /* 轮播图 - 修正对齐 */
+  .custom-swiper {
+    width: 660rpx;
+    height: 280rpx;
+    border-radius: 24rpx;
+    overflow: hidden;
+    margin: 0 auto; /* 水平居中 */
+    display: block; /* 确保是块级元素 */
+  }
+  
+  /* 轮播图图片 */
+  .swiper-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 24rpx;
+    display: block;
+  }
+  
+  /* 文字遮罩层 */
+  .swiper-text-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24rpx 32rpx;
+    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+    color: white;
+    box-sizing: border-box;
+  }
+  
+  .swiper-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .swiper-desc {
+    font-size: 28rpx;
+    opacity: 0.9;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Tab内容区域 */
+  .tab-content {
+    padding: 32rpx;
+  }
+  
+  .tab1-content, .tab2-content {
+    font-size: 28rpx;
+    color: #666;
+    line-height: 1.6;
+  }
+
+
+  /* ========== 推荐区域 ========== */
+  .recommendation-container {
+
+    position: relative;
+    padding: 16rpx 0;
+  }
+  
+  .recommendation-wrapper {
+    width: 660rpx;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .recommend-icon {
+    width: 36rpx;
+    height: 36rpx;
+    margin-right: 12rpx;
+  }
+  
+  /* 下拉菜单 */
+  .sort-menu {
+    position: absolute;
+    top: 80rpx;
+    left: 24rpx;
+    width: 180rpx;
+    background: #fff;
+    border-radius: 12rpx;
+    box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 100;
+  }
+  
+  /* 菜单项 */
+  .sort-item {
+    padding: 20rpx;
+    text-align: center;
+    font-size: 28rpx;
+  }
+  
+  .sort-item:not(:last-child) {
+    border-bottom: 1rpx solid #eee;
+  }
+
+  /* 当前选中高亮 */
+.sort-item.active {
+    color: #1e90ff;              /* 微信绿 */
+    background-color: #DFECFC;
+    font-weight: 600;
+  }
+  
+  
+  .sort-item:active {
+    background-color: #f5f5f5;
+  }
+
+/* ========== 瀑布流样式 ========== */
+/* 关键修复：确保总宽度为660rpx */
+.waterfall-wrapper {
+    width: 660rpx;
+    margin: 0 auto;
+    padding: 0rpx 0 40rpx 0;
+    display: flex;
+    box-sizing: border-box;
+   /* border: 2rpx solid red;*/
+    background: #F3F4F5;
+  }
+  
+  /* 每列宽度计算： (660rpx - 20rpx间距) ÷ 2 = 320rpx */
+  .waterfall-column {
+    width: 320rpx;
+    display: flex;
+    flex-direction: column;
+    /*border: 2rpx solid blue;*/
+  }
+  
+  /* 左列加右边距 */
+  .waterfall-column.left {
+    margin-right: 20rpx;
+    background-color: #F3F4F5;
+  }
+  
+  .waterfall-column.right {
+    background: #F3F4F5;
+  }
+  
+  /* 帖子卡片样式 */
+  .post-item {
+    margin-bottom: 20rpx;
+    background: white;
+    border-radius: 20rpx;
+    overflow: hidden;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    width: 100%; /* 占满列宽 */
+    box-sizing: border-box;
+  }
+  
+  .post-item:active {
+    transform: scale(0.98);
+    box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 图片区域 - 调整为适合320rpx宽度 */
+  .post-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 133.33%; /* 3:4 比例 (320:426.67)，更适配窄列 */
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+  
+  .post-image {
+  
+    opacity: 1 !important;
+    visibility: visible !important;
+     
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  
+  .post-image-wrapper:active .post-image {
+    transform: scale(1.05);
+  }
+  
+  /* 内容区域 */
+  .post-info {
+    padding: 20rpx; /* 减小内边距以适应窄列 */
+    box-sizing: border-box;
+  }
+  
+  /* 标题 - 调整字体大小适应窄列 */
+  .post-title {
+    font-size: 30rpx; /* 稍微减小字号 */
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 12rpx;
+  }
+  
+  /* 描述 */
+  .post-desc {
+    font-size: 26rpx; /* 稍微减小字号 */
+    color: #666;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 20rpx;
+  }
+  
+  /* 用户信息 */
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16rpx;
+  }
+  
+  .user-avatar {
+    width: 40rpx; /* 减小头像大小 */
+    height: 40rpx;
+    border-radius: 50%;
+    margin-right: 12rpx;
+    border: 1rpx solid #f0f0f0;
+  }
+  
+  .user-name {
+    flex: 1;
+    font-size: 26rpx; /* 减小字号 */
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .post-time {
+    font-size: 22rpx; /* 减小字号 */
+    color: #999;
+    margin-left: 12rpx;
+    white-space: nowrap;
+  }
+  
+  /* 互动数据 */
+  .post-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16rpx;
+    border-top: 1rpx solid #f0f0f0;
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    font-size: 24rpx; /* 减小字号 */
+    color: #666;
+  }
+  
+  .stat-item:first-child {
+    margin-right: 24rpx;
+  }
+  
+  /* ========== 加载状态样式 ========== */
+  .loading {
+    width: 660rpx;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40rpx 0;
+    color: #999;
+    font-size: 28rpx;
+    background: white;
+  }
+  
+  .no-more {
+    width: 660rpx;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40rpx 0;
+    color: #999;
+    font-size: 28rpx;
+    background: transparent;
+  }
+  
+  /* ========== 调试样式 ========== */
+  .debug-border {
+    border: 2rpx solid red !important;
+  }

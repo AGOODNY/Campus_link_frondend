@@ -1,0 +1,98 @@
+<!--/pages/post/post.wxss-->
+<view class="page">
+
+<!-- 分区选择 -->
+<view class="card">
+  <text class="label">Post Sections</text>
+
+  <view class="section-btns">
+    <view
+      class="section-btn {{sectionIndex === 0 ? 'active' : ''}}"
+      data-index="0"
+      bindtap="selectSection"
+    >Life</view>
+
+    <view
+      class="section-btn {{sectionIndex === 1 ? 'active' : ''}}"
+      data-index="1"
+      bindtap="selectSection"
+    >Study</view>
+
+    <view
+      class="section-btn {{sectionIndex === 2 ? 'active' : ''}}"
+      data-index="2"
+      bindtap="selectSection"
+    >Problem track</view>
+  </view>
+
+  <!-- 生活区子分区 -->
+  <view
+    class="sub-btns"
+    wx:if="{{sectionIndex === 0}}"
+  >
+    <view
+      class="sub-btn {{lifeSubIndex === 0 ? 'active' : ''}}"
+      data-index="0"
+      bindtap="selectLifeSub"
+    >On Campus</view>
+
+    <view
+      class="sub-btn {{lifeSubIndex === 1 ? 'active' : ''}}"
+      data-index="1"
+      bindtap="selectLifeSub"
+    >Alumni Corner</view>
+  </view>
+</view>
+
+<!-- 标题（非问题反馈） -->
+<view
+  class="card"
+  wx:if="{{sectionIndex !== 2 && sectionIndex !== -1}}"
+>
+  <input
+    class="input"
+    placeholder="Please enter a title"
+    bindinput="onTitleInput"
+  />
+</view>
+
+<!-- 正文 / 问题描述 -->
+<view
+  class="card"
+  wx:if="{{sectionIndex !== -1}}"
+>
+  <textarea
+    class="textarea"
+    placeholder="{{sectionIndex === 2 ? 'Please describe the problem you encountered.' : 'Please enter the main text'}}"
+    bindinput="onContentInput"
+  />
+</view>
+
+<!-- 图片 -->
+<view
+  class="card"
+  wx:if="{{sectionIndex !== -1}}"
+>
+  <view class="img-list">
+    <block wx:for="{{images}}" wx:key="*this">
+      <image class="img" src="{{item}}" />
+    </block>
+
+    <view
+      class="img-add"
+      wx:if="{{images.length < 9}}"
+      bindtap="addImage"
+    >+</view>
+  </view>
+</view>
+
+<!-- 发布按钮 -->
+<button
+  class="submit {{canSubmit ? '' : 'disabled'}}"
+  disabled="{{!canSubmit}}"
+  bindtap="submitPost"
+>
+  Post
+</button>
+
+</view>

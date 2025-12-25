@@ -1,0 +1,120 @@
+<!-- 页面内容 -->
+<view class="page-content" wx:if="{{post}}">
+
+<view class="container">
+
+  <!-- 头部用户信息 -->
+  <view class="header">
+    <image src="{{post.avatar}}" class="avatar" mode="aspectFill" />
+    <text class="username">{{post.user_name}}</text>
+  </view>
+
+  <!-- 帖子内容区域 -->
+  <view class="content">
+
+    <!-- 图片区域 -->
+    <view class="image-container"
+          wx:if="{{post.images && post.images.length}}">
+      <image
+        wx:for="{{post.images}}"
+        wx:key="*this"
+        src="{{item}}"
+        mode="widthFix"
+        class="post-image"
+      />
+    </view>
+
+    <!-- 标题 -->
+    <text class="post-title">{{post.title}}</text>
+
+    <!-- 正文 -->
+    <view class="post-text">{{post.content}}</view>
+
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="detail">
+    <view class="actions">
+
+      <!-- 点赞 -->
+      <button bindtap="likePost"
+              class="action-btn {{isLiked ? 'liked' : ''}}">
+        <image 
+          src="{{isLiked ? '/pages/post_detail/post_image/like-selected.png' : '/pages/post_detail/post_image/like.png'}}" 
+          class="like-icon" 
+        />
+        <text class="count">{{post.like_count}}</text>
+      </button>
+
+      <!-- 收藏（后端未实现，数量先不展示） -->
+      <button class="action-btn">
+        <image
+          src="/pages/post_detail/post_image/save.png"
+          class="icon"
+        />
+      </button>
+
+      <!-- 评论 -->
+      <view class="action-btn comment-btn">
+        <image
+          src="/pages/post_detail/post_image/comment.png"
+          class="icon"
+        />
+        <text class="count">{{post.comment_count}}</text>
+      </view>
+
+    </view>
+  </view>
+
+</view>
+
+<!-- 评论区 -->
+<view class="comment-section"
+      wx:if="{{comments && comments.length}}">
+  <view class="comment-title">
+    comments {{comments.length}}
+  </view>
+
+  <view
+    class="comment-item"
+    wx:for="{{comments}}"
+    wx:key="id"
+  >
+    <view class="comment-content">
+      <text class="comment-nickname">
+        {{item.author_name}}
+      </text>
+      <text class="comment-text">
+        {{item.content}}
+      </text>
+    </view>
+  </view>
+</view>
+
+
+<!-- 固定底部评论输入框 -->
+<view class="comment-input-fixed">
+<view class="comment-input-box">
+
+  <image
+    src="/pages/post_detail/post_image/comment.png"
+    class="comment-input-icon"
+  />
+
+  <input
+    class="comment-input"
+    placeholder="say something…"
+    bindinput="onInput"
+    value="{{inputValue}}"
+  />
+
+  <text
+    class="send-btn {{inputValue ? 'active' : ''}}"
+    bindtap="sendComment"
+  >
+    发送
+  </text>
+
+</view>
+</view>
+</view>

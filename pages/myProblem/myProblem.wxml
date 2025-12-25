@@ -1,0 +1,44 @@
+<!--pages/problem/problem.wxml-->
+<view class="page">
+
+<!-- 所有问题列表 -->
+<view class="list">
+
+  <block wx:for="{{questionList}}" wx:key="id">
+  <view class="card" bindtap="goDetail" data-id="{{item.id}}">
+
+    <!-- 用户信息 + 状态 -->
+    <view class="header">
+      <view class="user">
+        <image class="avatar" src="{{item.avatar}}" />
+        <text class="nickname">{{item.nickname}}</text>
+      </view>
+
+      <view class="status {{statusMap[item.status].class}}">
+        {{statusMap[item.status].text}}
+      </view>
+    </view>
+
+    <!-- 问题内容 -->
+    <view class="content">{{item.content}}</view>
+
+    <!-- 图片 -->
+    <image
+      wx:if="{{item.image}}"
+      class="img"
+      src="{{item.image}}"
+      mode="aspectFill"
+    />
+
+    <!-- 时间 -->
+    <view class="time">
+      Feedback Time：{{item.time}}
+    </view>
+
+  </view>
+</block>
+
+
+</view>
+
+</view>

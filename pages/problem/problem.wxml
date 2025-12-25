@@ -1,0 +1,53 @@
+<!--pages/problem/problem.wxml-->
+<view class="page">
+
+<!-- 我的问题 -->
+<view
+  class="my-question"
+  bindtap="goMyQuestion"
+>
+  <image
+    class="my-question-img"
+    src="/pages/history/images/1.png"
+    mode="aspectFill"
+  />
+  <view class="my-question-mask">
+    <text class="my-question-text">My issues</text>
+  </view>
+</view>
+
+<!-- 所有问题列表 -->
+<view class="list">
+
+  <block wx:for="{{questionList}}" wx:key="id">
+    <view
+      class="card"
+      bindtap="goDetail"
+      data-id="{{item.id}}"
+    >
+
+      <!-- 用户信息 -->
+      <view class="user">
+        <image class="avatar" src="{{item.avatar}}" />
+        <text class="nickname">{{item.nickname}}</text>
+      </view>
+
+      <!-- 问题描述 -->
+      <view class="content">
+        {{item.content}}
+      </view>
+
+      <!-- 问题图片 -->
+      <image
+        wx:if="{{item.image}}"
+        class="img"
+        src="{{item.image}}"
+        mode="aspectFill"
+      />
+
+    </view>
+  </block>
+
+</view>
+
+</view>

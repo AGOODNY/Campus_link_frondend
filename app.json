@@ -1,0 +1,66 @@
+{
+  "entryPagePath": "pages/login/login",
+  "pages": [
+    "pages/me/me",
+    "pages/study/study",
+    "pages/post/post",
+    "pages/problem/problem",
+    "pages/login/login",
+    "pages/setting/setting",
+    "pages/history/history",
+    "pages/myPost/myPost",
+    "pages/myProblem/myProblem",
+    "pages/problemDetail/problemDetail",
+    "pages/compous_index/compous_index",
+    "pages/post_detail/post_detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f8f8f8",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Campus Link",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#eeeeee",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "selectedColor": "#1e90ff",
+    "list": [
+      {
+        "pagePath": "pages/compous_index/compous_index",
+        "text": "Life",
+        "iconPath": "images/life.png",
+        "selectedIconPath": "images/life_selected.png"
+      },
+      {
+        "pagePath": "pages/study/study",
+        "text": "Study",
+        "iconPath": "images/study.png",
+        "selectedIconPath": "images/study_selected.png"
+      
+      },
+      {
+        "pagePath": "pages/post/post",
+        "iconPath": "images/post.png",
+        "selectedIconPath": "images/post_selected.png"
+      },
+      {
+        "pagePath": "pages/problem/problem",
+        "text": "Problem Track",
+        "iconPath": "images/problem.png",
+        "selectedIconPath": "images/problem_selected.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "Me",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me_selected.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "style": "v2",
+  "debug": true
+}

@@ -1,0 +1,22 @@
+<!--pages/me/me.wxml-->
+<view class="profile">
+  <image
+    class="avatar"
+    src="{{photo}}"
+  />
+  <view class="nickname">
+    {{username}}
+  </view>
+</view>
+
+<view class="myPost">
+  <button class="myPost" bind:tap="goMyPost">My Posts</button>
+</view>
+
+<view class="history">
+  <button class="history" bind:tap="goHistory">History</button>
+</view>
+
+<view class="setting">
+  <button class="setting" bind:tap="goSetting">Setting</button>
+</view>
