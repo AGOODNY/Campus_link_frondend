@@ -1,137 +1,57 @@
-// utils/question.js
-const STORAGE_KEY = 'questionList'
+const BASE_URL = 'http://172.20.10.3:8000/api';
 
-/**
- * 初始化问题（第一次进入用）
- */
-function initQuestions() {
-  const list = wx.getStorageSync(STORAGE_KEY)
-  if (!list || !list.length) {
-    const mock = [
-      {
-        id: 1,
-        avatar: '/pages/problem/avatar/a1.jpg',
-        nickname: 'Lee',
-        content: 'The dormitory internet often disconnects at night, affecting my studies.',
-        images: [],
-        status: 'pending',
-        createTime: '2025-01-18 21:30',
-        replies: [],
-        solution: null
+function request(url, method="GET", data={}) {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: BASE_URL + url,
+      method,
+      data,
+      header: { 'Authorization': 'Token ' + wx.getStorageSync('token') },
+      success: res => {
+        if (res.statusCode === 200 || res.statusCode === 201) resolve(res.data)
+        else reject(res.data)
       },
-      {
-        id: 2,
-        avatar: '/pages/problem/avatar/a2.jpg',
-        nickname: 'Arinota',
-        content: 'The classroom projector is not working',
-        images: [],
-        status: 'reported',
-        createTime: '2025-01-19 10:20',
-        replies: [
-          {
-            staffName: 'Logistics Teacher',
-            time: '2025-01-19 10:25',
-            content: 'The logistics teacher has already reported back to the logistics department.'
-          }
-        ],
-        solution: null
-      },
-      {
-        id: 3,
-        avatar: '/pages/problem/avatar/a3.jpg',
-        nickname: 'LNY',
-        content: 'Why is my takeout always getting stolen?。',
-        images: ['/pages/problem/images/1.jpg'],
-        status: 'solved',
-        createTime: '2025-01-19 10:20',
-        replies: [
-          {
-            staffName: 'Logistics Teacher',
-            time: '2025-01-19 10:25',
-            content: 'It has been reported to logistics.'
-          }
-        ],
-        solution: {
-          description: 'Monitoring has been installed and patrols have been strengthened.',
-          images: []
-        }
-      }
-    ]
-
-    wx.setStorageSync(STORAGE_KEY, mock)
-    return mock
-  }
-  return list
+      fail: reject
+    })
+  })
 }
 
-/**
- * 获取所有问题
- */
-function getAllQuestions() {
-  return wx.getStorageSync(STORAGE_KEY) || []
+function fetchIssueList() {
+  return request('/issues/').then(list =>
+    list.map(item => ({
+      id: item.id,
+      nickname: item.creator_name,
+      title: item.title,
+      status: item.status,
+      createTime: item.created_at
+    }))
+  )
 }
 
-/**
- * 根据 id 获取单个问题
- */
-function getQuestionById(id) {
-  const list = getAllQuestions()
-  return list.find(q => q.id === id)
+function fetchIssueDetail(id) {
+  return request(`/issues/${id}/`).then(d => ({
+    id: d.id,
+    title: d.title,
+    content: d.description,
+    status: d.status,
+    avatar: d.creator_avatar,     // new
+    nickname: d.creator_name,     // new
+    images: (d.issue_pic || []).map(img => img.image),
+    replies: (d.nodes || []).map(n => ({
+      staffName: n.operator_name,
+      content: n.description,
+      time: n.created_at,
+      image: n.image || null
+    }))
+  }))
 }
 
-/**
- * 保存整个列表
- */
-function saveQuestions(list) {
-  wx.setStorageSync(STORAGE_KEY, list)
+function postNode(id, payload) {
+  return request(`/issues/${id}/nodes/`, "POST", {
+    node_title: payload.node_title,
+    node_status: payload.node_status,
+    description: payload.content
+  })
 }
 
-/**
- * 更新单个问题
- */
-function updateQuestion(updated) {
-  const list = getAllQuestions()
-  const index = list.findIndex(q => q.id === updated.id)
-  if (index !== -1) {
-    list[index] = updated
-    saveQuestions(list)
-  }
-}
-
-/**
- * 添加回复
- */
-function addReply(questionId, reply) {
-  const question = getQuestionById(questionId)
-  if (!question) return
-
-  question.replies.push(reply)
-
-  // pending → reported
-  if (question.status === 'pending') {
-    question.status = 'reported'
-  }
-
-  updateQuestion(question)
-}
-
-/**
- * 提交解决方案
- */
-function solveQuestion(questionId, solution) {
-  const question = getQuestionById(questionId)
-  if (!question) return
-
-  question.status = 'solved'
-  question.solution = solution
-
-  updateQuestion(question)
-}
-
-module.exports = {
-  initQuestions,
-  getAllQuestions,
-  getQuestionById,
-  addReply,
-  solveQuestion
-}
+module.exports = { fetchIssueList, fetchIssueDetail, postNode }

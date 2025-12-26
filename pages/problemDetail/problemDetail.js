@@ -1,68 +1,36 @@
-// pages/problemDetail/problemDetail.js
-const questionStore = require('../../utils/question')
+const api = require('../../utils/question')
 
 Page({
   data: {
-    isStaff: false,
     question: null,
     replies: [],
-    solutionText: '',
-    solutionImages: [],
-    statusMap: {
-      pending: 'Pending',
-      reported: 'Accepted',
-      solved: 'Resolved'
-    }
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     const id = Number(options.id)
-    const question = questionStore.getQuestionById(id)
-
-    if (question) {
+    try {
+      const detail = await api.fetchIssueDetail(id)
       this.setData({
-        question,
-        replies: question.replies || []
+        question: detail,
+        replies: detail.replies
       })
+    } catch (e) {
+      console.error("fail to load problem detail", e)
+      wx.showToast({ title: 'Load failed', icon: 'none' })
     }
   },
 
-  submitReply(e) {
+  async submitReply(e) {
     const content = e.detail.value.reply
     if (!content) return
 
-    const reply = {
-      id: Date.now(),
-      staffName: 'Staff',
-      content,
-      time: new Date().toLocaleString()
-    }
-
-    questionStore.addReply(this.data.question.id, reply)
-
-    const question = questionStore.getQuestionById(this.data.question.id)
-
-    this.setData({
-      question,
-      replies: question.replies
-    })
-  },
-
-  submitSolution() {
-    if (!this.data.solutionText) {
-      wx.showToast({ title: 'Please enter a solution description', icon: 'none' })
-      return
-    }
-
-    questionStore.solveQuestion(this.data.question.id, {
-      description: this.data.solutionText,
-      images: this.data.solutionImages
+    await api.postNode(this.data.question.id, {
+      node_title: 'Reply',
+      node_status: 'processing',
+      content
     })
 
-    const question = questionStore.getQuestionById(this.data.question.id)
-
-    this.setData({ question })
-
-    wx.showToast({ title: 'The problem has been resolved' })
+    const detail = await api.fetchIssueDetail(this.data.question.id)
+    this.setData({ replies: detail.replies })
   }
 })

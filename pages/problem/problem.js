@@ -1,25 +1,19 @@
-// pages/post/post.js
-const questionStore = require('../../utils/question')
+// pages/problem/problem.js
+const api = require('../../utils/question')
 
 Page({
   data: {
     questionList: []
   },
 
-  onLoad() {
-    const list = questionStore.initQuestions()
-    this.setData({
-      questionList: list
-    })
-  },
-
   onShow() {
-    this.setData({
-      questionList: questionStore.getAllQuestions()
+    api.fetchIssueList().then(list => {
+      this.setData({ questionList: list })
+    }).catch(err => {
+      console.error("Fail to get problem lists.", err)
     })
   },
 
-  /* 跳转我的问题 */
   goMyQuestion() {
     wx.navigateTo({
       url: '/pages/myProblem/myProblem'
@@ -32,5 +26,3 @@ Page({
     })
   }
 })
-
-  

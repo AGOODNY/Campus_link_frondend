@@ -1,21 +1,15 @@
-// pages/myProblem/myProblem.js
+const api = require('../../utils/question')
+
 Page({
   data: {
     questionList: []
   },
 
-  onLoad() {
-    // 模拟数据
-    this.setData({
-      questionList: [
-        {
-          id: 1,
-          avatar: '/pages/problem/avatar/a1.jpg',
-          nickname: 'Lee',
-          content: 'The dormitory internet often disconnects at night. Is there any solution?',
-          image: ''
-        }
-      ]
+  onShow() {
+    api.fetchIssueList().then(list => {
+      // 过滤只显示当前学生提交过的问题
+      const myId = wx.getStorageSync("user_id");
+      this.setData({ questionList: list.filter(q => q.creator_id === myId) })
     })
   },
 
