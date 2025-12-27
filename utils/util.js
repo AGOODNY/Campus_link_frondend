@@ -175,7 +175,7 @@ const wechatLogin = (role) => {
 }
 
 /**
- * 统一发帖接口
+ * 统一发帖接口（最终版 — 支持 study / life / issue，单图上传）
  */
 const createPost = (options) => {
   const {
@@ -184,44 +184,50 @@ const createPost = (options) => {
     content,
     description,
     life_category,
-    images = []
+    imagePath
   } = options
 
   return new Promise((resolve, reject) => {
-    wx.uploadFile({
+    const uploadConfig = {
       url: `${BASE_URL}/posts/`,
-      filePath: images[0],      // wx.uploadFile 必须给一个
-      name: 'images',           // 后端用 request.FILES.getlist('images')
       header: {
         'Authorization': 'Token ' + wx.getStorageSync('token')
       },
       formData: {
         target,
-        title,
-
-        // life / study
-        content: content || '',
-
-        // issue
-        description: description || '',
-
-        // life 专属
-        life_category: life_category || ''
+        title: title || "",
+        content: content || "",
+        description: description || "",
+        life_category: life_category || ""
       },
       success(res) {
         try {
-          const data = JSON.parse(res.data)
-          resolve(data)
-        } catch (e) {
-          reject('Invalid response')
+          resolve(JSON.parse(res.data))
+        } catch {
+          reject("Invalid response")
         }
       },
       fail(err) {
         reject(err)
       }
-    })
+    }
+
+    // 只有有图片才加上传文件字段
+    if (imagePath) {
+      uploadConfig.filePath = imagePath
+      uploadConfig.name = "image"
+      wx.uploadFile(uploadConfig)
+    } else {
+      // 无图时转为普通 POST
+      wx.request({
+        method: "POST",
+        ...uploadConfig
+      })
+    }
   })
 }
+
+
 
 
 

@@ -86,33 +86,34 @@ Page({
         title,
         content,
         life_category: lifeSubIndex === 0 ? 'campus_life' : 'return_school',
-        images,
+        imagePath: images.length ? images[0] : "",
         avatar,
         nickname
       }
     }
-
+    
     if (sectionIndex === 1) {
       postData = {
         target: 'study',
         title,
         content,
-        images,
+        imagePath: images.length ? images[0] : "",
         avatar,
         nickname
       }
     }
-
+    
     if (sectionIndex === 2) {
       postData = {
         target: 'issue',
         title,
         description: content,
-        images,
+        imagePath: images.length ? images[0] : "",
         avatar,
         nickname
       }
     }
+    
 
     createPost(postData)
       .then(() => {
