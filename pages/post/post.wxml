@@ -57,6 +57,9 @@
 </view>
 
 <!-- 正文 / 问题描述 -->
+<view class="card" wx:if="{{sectionIndex === 2}}">
+  <input class="input" placeholder="Enter problem title" bindinput="onTitleInput"/>
+</view>
 <view
   class="card"
   wx:if="{{sectionIndex !== -1}}"

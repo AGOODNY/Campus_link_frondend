@@ -1,6 +1,6 @@
 const BASE_URL = 'http://172.20.10.3:8000/api';
 
-function request(url, method="GET", data={}) {
+function request(url, method = "GET", data = {}) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: BASE_URL + url,
@@ -20,9 +20,27 @@ function fetchIssueList() {
   return request('/issues/').then(list =>
     list.map(item => ({
       id: item.id,
-      nickname: item.creator_name,
       title: item.title,
+      content: item.title,
+      nickname: item.nickname,
+      avatar: item.avatar,
       status: item.status,
+      creator_id: item.creator_id,
+      createTime: item.created_at
+    }))
+  )
+}
+
+function fetchMyIssueList() {
+  return request('/issues/my/').then(list =>
+    list.map(item => ({
+      id: item.id,
+      title: item.title,
+      content: item.title,
+      nickname: item.nickname,
+      avatar: item.avatar,
+      status: item.status,
+      creator_id: item.creator_id,
       createTime: item.created_at
     }))
   )
@@ -33,12 +51,12 @@ function fetchIssueDetail(id) {
     id: d.id,
     title: d.title,
     content: d.description,
+    avatar: d.avatar,
+    nickname: d.nickname,
     status: d.status,
-    avatar: d.creator_avatar,     // new
-    nickname: d.creator_name,     // new
     images: (d.issue_pic || []).map(img => img.image),
     replies: (d.nodes || []).map(n => ({
-      staffName: n.operator_name,
+      name: n.operator_name,
       content: n.description,
       time: n.created_at,
       image: n.image || null
@@ -54,4 +72,4 @@ function postNode(id, payload) {
   })
 }
 
-module.exports = { fetchIssueList, fetchIssueDetail, postNode }
+module.exports = { fetchIssueList, fetchMyIssueList, fetchIssueDetail, postNode }

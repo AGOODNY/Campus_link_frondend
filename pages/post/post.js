@@ -1,5 +1,6 @@
 // pages/post/post.js
 const { createPost } = require('../../utils/util')
+
 Page({
   data: {
     sectionIndex: -1,
@@ -12,24 +13,19 @@ Page({
     canSubmit: false
   },
 
-  /* 选择主分区 */
   selectSection(e) {
     const index = Number(e.currentTarget.dataset.index)
-
     this.setData({
       sectionIndex: index,
       lifeSubIndex: -1,
 
-      //  切换分区时清空不需要的字段
-      title: index === 2 ? '' : this.data.title,
+      title: '',
       content: '',
       images: [],
-
       canSubmit: false
     })
   },
 
-  /* 选择生活区子分区 */
   selectLifeSub(e) {
     this.setData({
       lifeSubIndex: Number(e.currentTarget.dataset.index)
@@ -62,90 +58,70 @@ Page({
     })
   },
 
-  /* 是否允许发布 */
   checkCanSubmit() {
     const { sectionIndex, title, content } = this.data
+    if (sectionIndex === -1) return this.setData({ canSubmit: false })
 
-    if (sectionIndex === -1) {
-      this.setData({ canSubmit: false })
-      return
-    }
-
-    // 问题反馈
     if (sectionIndex === 2) {
-      this.setData({
-        canSubmit: !!content
-      })
-      return
+      return this.setData({ canSubmit: !!title && !!content })
     }
 
-    // 生活区 / 学习区
-    this.setData({
-      canSubmit: !!title && !!content
-    })
+    return this.setData({ canSubmit: !!title && !!content })
   },
 
   submitPost() {
-    const {
-      sectionIndex,
-      lifeSubIndex,
-      title,
-      content,
-      images
-    } = this.data
-  
+    const token = wx.getStorageSync('token')
+    const defaultAvatar = "/images/default_avatar.png"
+    const defaultNickname = "Anonymous"
+
+    const avatar = wx.getStorageSync('avatar') || defaultAvatar
+    const nickname = wx.getStorageSync('nickname') || defaultNickname
+
+    const { sectionIndex, lifeSubIndex, title, content, images } = this.data
     let postData = {}
-  
-    // 生活区
+
     if (sectionIndex === 0) {
       postData = {
         target: 'life',
         title,
         content,
         life_category: lifeSubIndex === 0 ? 'campus_life' : 'return_school',
-        images
+        images,
+        avatar,
+        nickname
       }
     }
-  
-    // 学习区
+
     if (sectionIndex === 1) {
       postData = {
         target: 'study',
         title,
         content,
-        images
+        images,
+        avatar,
+        nickname
       }
     }
-  
-    // 问题追踪
+
     if (sectionIndex === 2) {
       postData = {
         target: 'issue',
         title,
         description: content,
-        images
+        images,
+        avatar,
+        nickname
       }
     }
-  
+
     createPost(postData)
-      .then(res => {
-        wx.showToast({
-          title: 'Success',
-          icon: 'success'
-        })
-  
-        // 发布成功后返回
-        setTimeout(() => {
-          wx.navigateBack()
-        }, 800)
+      .then(() => {
+        wx.showToast({ title: 'Success', icon: 'success' })
+        setTimeout(() => wx.navigateBack(), 800)
       })
       .catch(err => {
-        wx.showToast({
-          title: 'Fail',
-          icon: 'none'
-        })
+        wx.showToast({ title: 'Fail', icon: 'none' })
         console.error(err)
       })
   }
-  
 })
