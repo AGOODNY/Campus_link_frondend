@@ -8,9 +8,10 @@
         <text class="nickname">{{question.nickname}}</text>
       </view>
 
-      <view class="status {{question.status}}">
-        {{statusMap[question.status]}}
-      </view>
+      <!--状态显示：确保 pending / accepted / resolved 都能展示 -->
+      <text class="status {{question.status}}">
+        {{ statusMap[question.status] }}
+      </text>
     </view>
 
     <view class="content">

@@ -45,21 +45,39 @@
 
 /* ===== 状态标签 ===== */
 .status {
+  /* 关键修复：设置内联块级显示 */
+  display: inline-block;
+  
+  /* 确保有足够内边距包裹文字 */
   padding: 8rpx 20rpx;
+  
+  /* 圆角效果 */
   border-radius: 24rpx;
+  
+  /* 文字样式 */
   font-size: 24rpx;
   color: #fff;
+  
+  /* 可选：确保标签不换行 */
+  white-space: nowrap;
+  
+  /* 可选：垂直居中文字 */
+  line-height: 1;
+  
+  /* 可选：最小宽度确保标签美观 */
+  min-width: 80rpx;
+  text-align: center;
 }
 
 .status.pending {
   background: #faad14;
 }
 
-.status.reported {
+.status.accepted {
   background: #1890ff;
 }
 
-.status.solved {
+.status.resolved {
   background: #52c41a;
 }
 
@@ -185,3 +203,4 @@ button::after {
   margin-top: 16rpx;
   background: #52c41a;
 }
+
