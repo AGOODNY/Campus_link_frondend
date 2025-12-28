@@ -73,13 +73,13 @@ Page({
   submitPost() {
     const defaultAvatar = "/images/default_avatar.png"
     const defaultNickname = "Anonymous"
-
+  
     const avatar = wx.getStorageSync('avatar') || defaultAvatar
     const nickname = wx.getStorageSync('nickname') || defaultNickname
-
+  
     const { sectionIndex, lifeSubIndex, title, content, images } = this.data
     let postData = {}
-
+  
     if (sectionIndex === 0) {
       postData = {
         target: 'life',
@@ -91,7 +91,7 @@ Page({
         nickname
       }
     }
-
+  
     if (sectionIndex === 1) {
       postData = {
         target: 'study',
@@ -102,7 +102,7 @@ Page({
         nickname
       }
     }
-
+  
     if (sectionIndex === 2) {
       postData = {
         target: 'issue',
@@ -113,25 +113,25 @@ Page({
         nickname
       }
     }
-
+  
     createPost(postData)
       .then(() => {
         wx.showToast({ title: 'Success', icon: 'success' })
-
-        // 关键：发帖成功后重置内容 —— 按钮恢复
+  
+        // ⭐ 发帖完成 — 彻底清空，使按钮恢复可点击
         this.setData({
+          sectionIndex: -1,
+          lifeSubIndex: -1,
           title: '',
           content: '',
           images: [],
           canSubmit: false
         })
-
-        // 也可选择返回上一页（延迟一下）
-        // setTimeout(() => wx.navigateBack(), 800)
       })
       .catch(err => {
         wx.showToast({ title: 'Fail', icon: 'none' })
         console.error(err)
       })
   }
+  
 })
