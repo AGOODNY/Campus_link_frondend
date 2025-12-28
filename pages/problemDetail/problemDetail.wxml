@@ -8,7 +8,7 @@
         <text class="nickname">{{question.nickname}}</text>
       </view>
 
-      <!--状态显示：确保 pending / accepted / resolved 都能展示 -->
+      <!--状态显示：pending / accepted / resolved -->
       <text class="status {{question.status}}">
         {{ statusMap[question.status] }}
       </text>
@@ -35,7 +35,7 @@
     </view>
   </view>
 
-  <!-- 阶段 2：教职工回复 -->
+  <!-- Processing Progress -->
   <view class="section-title">Processing Progress</view>
 
   <view class="card">
@@ -56,58 +56,16 @@
 
   <!-- 教职工回复输入 -->
   <form
-    wx:if="{{isStaff && question.status !== 'solved'}}"
+    wx:if="{{isStaff && question.status !== 'resolved'}}"
     bindsubmit="submitReply"
-    class="card"
+    class="reply-form"
   >
     <textarea
       name="reply"
       placeholder="Please enter a reply"
     />
-    <button formType="submit">Submit Reply</button>
+    <button formType="submit" class="reply-btn">Submit Reply</button>
   </form>
 
-  <!-- 阶段 3：解决方案提交 -->
-  <view
-    wx:if="{{isStaff && question.status === 'reported'}}"
-    class="card"
-  >
-    <view class="section-title">Problem Resolution Explanation</view>
 
-    <textarea
-      placeholder="Please enter a resolution description"
-      bindinput="onSolutionInput"
-    />
-
-    <view class="img-list">
-      <image
-        wx:for="{{solutionImages}}"
-        wx:key="*"
-        src="{{item}}"
-        mode="aspectFill"
-      />
-    </view>
-
-    <button bindtap="chooseSolutionImage">Upload the voucher image</button>
-    <button class="solve-btn" bindtap="submitSolution">
-      Submit and mark as resolved
-    </button>
-  </view>
-
-  <!-- 已解决 -->
-  <view wx:if="{{question.status === 'solved'}}" class="card">
-    <view class="section-title">Resolution result</view>
-    <view>{{question.solution.description}}</view>
-
-    <view class="img-list">
-      <image
-        wx:for="{{question.solution.images}}"
-        wx:key="*"
-        src="{{item}}"
-        mode="aspectFill"
-        bindtap="previewImage"
-        data-src="{{item}}"
-      />
-    </view>
-  </view>
 </view>

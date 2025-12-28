@@ -6,7 +6,7 @@ Page({
     question: null,
     replies: [],
     isStaff: false,
-  
+
     statusMap: {
       pending: "pending",
       accepted: "accepted",

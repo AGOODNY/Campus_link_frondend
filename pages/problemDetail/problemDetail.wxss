@@ -157,6 +157,20 @@
   line-height: 40rpx;
 }
 
+.reply-form {
+  margin: 0;
+  padding: 20rpx;
+  background: transparent;
+  border-radius: 0;
+}
+
+.reply-btn {
+  margin-top: 20rpx;
+  width: 100%;
+  border-radius: 50rpx;
+}
+
+
 /* ===== 无回复 ===== */
 .empty {
   text-align: center;
