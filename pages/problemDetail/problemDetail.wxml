@@ -1,123 +1,112 @@
 <!-- pages/problemDetail/problemDetail.wxml -->
 <view class="page">
-
-<!-- 问题主体 -->
-<view class="card">
-  <view class="header">
-    <view class="user">
-      <image class="avatar" src="{{question.avatar}}" />
-      <text class="nickname">{{question.nickname}}</text>
-    </view>
-
-    <view class="status {{question.status}}">
-      {{statusMap[question.status]}}
-    </view>
-  </view>
-
-  <view class="content">
-    {{question.content}}
-  </view>
-
-  <!-- 图片展示 -->
-  <view wx:if="{{question.images && question.images.length}}" class="img-list">
-    <image
-      wx:for="{{question.images}}"
-      wx:key="*"
-      src="{{item}}"
-      mode="aspectFill"
-      bindtap="previewImage"
-      data-src="{{item}}"
-    />
-  </view>
-
-  <view class="time">
-    Question Time：{{question.createTime}}
-  </view>
-</view>
-
-<!-- 阶段 2：教职工回复 -->
-<view class="section-title">Processing Progress</view>
-
-<view class="card">
-  <block wx:for="{{replies}}" wx:key="id">
-    <view class="reply-item">
-      <view class="reply-header">
-        <text class="reply-name">{{item.staffName}}</text>
-        <text class="reply-time">{{item.time}}</text>
+  <!-- 问题主体 -->
+  <view class="card">
+    <view class="header">
+      <view class="user">
+        <image class="avatar" src="{{question.avatar}}" />
+        <text class="nickname">{{question.nickname}}</text>
       </view>
-      <view class="reply-content">{{item.content}}</view>
+
+      <view class="status {{question.status}}">
+        {{statusMap[question.status]}}
+      </view>
     </view>
-  </block>
 
-  <view wx:if="{{!replies.length}}" class="empty">
-    No reply yet
+    <view class="content">
+      {{question.content}}
+    </view>
+
+    <!-- 图片展示 -->
+    <view wx:if="{{question.images && question.images.length}}" class="img-list">
+      <image
+        wx:for="{{question.images}}"
+        wx:key="*"
+        src="{{item}}"
+        mode="aspectFill"
+        bindtap="previewImage"
+        data-src="{{item}}"
+      />
+    </view>
+
+    <view class="time">
+      Question Time：{{question.createTime}}
+    </view>
   </view>
-</view>
 
-<!-- 教职工回复输入 -->
-<form
-  wx:if="{{isStaff && question.status !== 'solved'}}"
-  bindsubmit="submitReply"
-  class="card"
->
-  <textarea
-    name="reply"
-    placeholder="Please enter a reply"
-  />
-  <button formType="submit">Submit Reply</button>
-</form>
+  <!-- 阶段 2：教职工回复 -->
+  <view class="section-title">Processing Progress</view>
 
-<!-- 上报按钮 -->
-<button
-  wx:if="{{isStaff && question.status === 'pending'}}"
-  class="report-btn"
-  bindtap="reportQuestion"
->
-Report reply
-</button>
+  <view class="card">
+    <block wx:for="{{replies}}" wx:key="id">
+      <view class="reply-item">
+        <view class="reply-header">
+          <text class="reply-name">{{item.staffName}}</text>
+          <text class="reply-time">{{item.time}}</text>
+        </view>
+        <view class="reply-content">{{item.content}}</view>
+      </view>
+    </block>
 
-<!-- 阶段 3：解决方案提交 -->
-<view
-  wx:if="{{isStaff && question.status === 'reported'}}"
-  class="card"
->
-  <view class="section-title">Problem Resolution Explanation</view>
+    <view wx:if="{{!replies.length}}" class="empty">
+      No reply yet
+    </view>
+  </view>
 
-  <textarea
-    placeholder="Please enter a resolution description"
-    bindinput="onSolutionInput"
-  />
-
-  <view class="img-list">
-    <image
-      wx:for="{{solutionImages}}"
-      wx:key="*"
-      src="{{item}}"
-      mode="aspectFill"
+  <!-- 教职工回复输入 -->
+  <form
+    wx:if="{{isStaff && question.status !== 'solved'}}"
+    bindsubmit="submitReply"
+    class="card"
+  >
+    <textarea
+      name="reply"
+      placeholder="Please enter a reply"
     />
-  </view>
+    <button formType="submit">Submit Reply</button>
+  </form>
 
-  <button bindtap="chooseSolutionImage">Upload the voucher image</button>
-  <button class="solve-btn" bindtap="submitSolution">
-    Submit and mark as resolved
-  </button>
-</view>
+  <!-- 阶段 3：解决方案提交 -->
+  <view
+    wx:if="{{isStaff && question.status === 'reported'}}"
+    class="card"
+  >
+    <view class="section-title">Problem Resolution Explanation</view>
 
-<!-- 已解决 -->
-<view wx:if="{{question.status === 'solved'}}" class="card">
-  <view class="section-title">Resolution result</view>
-  <view>{{question.solution.description}}</view>
-
-  <view class="img-list">
-    <image
-      wx:for="{{question.solution.images}}"
-      wx:key="*"
-      src="{{item}}"
-      mode="aspectFill"
-      bindtap="previewImage"
-      data-src="{{item}}"
+    <textarea
+      placeholder="Please enter a resolution description"
+      bindinput="onSolutionInput"
     />
-  </view>
-</view>
 
+    <view class="img-list">
+      <image
+        wx:for="{{solutionImages}}"
+        wx:key="*"
+        src="{{item}}"
+        mode="aspectFill"
+      />
+    </view>
+
+    <button bindtap="chooseSolutionImage">Upload the voucher image</button>
+    <button class="solve-btn" bindtap="submitSolution">
+      Submit and mark as resolved
+    </button>
+  </view>
+
+  <!-- 已解决 -->
+  <view wx:if="{{question.status === 'solved'}}" class="card">
+    <view class="section-title">Resolution result</view>
+    <view>{{question.solution.description}}</view>
+
+    <view class="img-list">
+      <image
+        wx:for="{{question.solution.images}}"
+        wx:key="*"
+        src="{{item}}"
+        mode="aspectFill"
+        bindtap="previewImage"
+        data-src="{{item}}"
+      />
+    </view>
+  </view>
 </view>

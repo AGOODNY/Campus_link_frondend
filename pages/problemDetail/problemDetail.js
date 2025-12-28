@@ -6,11 +6,11 @@ Page({
     question: null,
     replies: [],
     isStaff: false,
-
+  
     statusMap: {
       pending: "pending",
-      processing: "accepted",
-      solved: "resolved"
+      accepted: "accepted",
+      resolved: "resolved"
     }
   },
 
