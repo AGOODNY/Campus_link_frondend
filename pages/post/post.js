@@ -62,6 +62,7 @@ Page({
     const { sectionIndex, title, content } = this.data
     if (sectionIndex === -1) return this.setData({ canSubmit: false })
 
+    // issue区要求 title + content
     if (sectionIndex === 2) {
       return this.setData({ canSubmit: !!title && !!content })
     }
@@ -70,7 +71,6 @@ Page({
   },
 
   submitPost() {
-    const token = wx.getStorageSync('token')
     const defaultAvatar = "/images/default_avatar.png"
     const defaultNickname = "Anonymous"
 
@@ -91,7 +91,7 @@ Page({
         nickname
       }
     }
-    
+
     if (sectionIndex === 1) {
       postData = {
         target: 'study',
@@ -102,7 +102,7 @@ Page({
         nickname
       }
     }
-    
+
     if (sectionIndex === 2) {
       postData = {
         target: 'issue',
@@ -113,12 +113,21 @@ Page({
         nickname
       }
     }
-    
 
     createPost(postData)
       .then(() => {
         wx.showToast({ title: 'Success', icon: 'success' })
-        setTimeout(() => wx.navigateBack(), 800)
+
+        // 关键：发帖成功后重置内容 —— 按钮恢复
+        this.setData({
+          title: '',
+          content: '',
+          images: [],
+          canSubmit: false
+        })
+
+        // 也可选择返回上一页（延迟一下）
+        // setTimeout(() => wx.navigateBack(), 800)
       })
       .catch(err => {
         wx.showToast({ title: 'Fail', icon: 'none' })

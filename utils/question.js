@@ -6,7 +6,10 @@ function request(url, method = "GET", data = {}) {
       url: BASE_URL + url,
       method,
       data,
-      header: { 'Authorization': 'Token ' + wx.getStorageSync('token') },
+      header: { 
+        'Authorization': 'Token ' + wx.getStorageSync('token'),
+        'Content-Type': 'application/x-www-form-urlencoded'  // 必须加
+      },
       success: res => {
         if (res.statusCode === 200 || res.statusCode === 201) resolve(res.data)
         else reject(res.data)
@@ -55,8 +58,8 @@ function fetchIssueDetail(id) {
     nickname: d.nickname,
     status: d.status,
     images: (d.issue_pic || []).map(img => img.image),
-    replies: (d.nodes || []).map(n => ({
-      name: n.operator_name,
+    nodes: (d.nodes || []).map(n => ({
+      staffName: n.operator_name,
       content: n.description,
       time: n.created_at,
       image: n.image || null
@@ -64,11 +67,40 @@ function fetchIssueDetail(id) {
   }))
 }
 
-function postNode(id, payload) {
-  return request(`/issues/${id}/nodes/`, "POST", {
-    node_title: payload.node_title,
-    node_status: payload.node_status,
-    description: payload.content
+// issueId: 问题id
+// { node_title, content, imagePath } 
+const postNode = (issueId, { node_title, content, imagePath }) => {
+  return new Promise((resolve, reject) => {
+    const header = {
+      Authorization: "Token " + wx.getStorageSync("token"),
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    if (imagePath) {
+      wx.uploadFile({
+        url: `${BASE_URL}/issues/${issueId}/nodes/`,
+        filePath: imagePath,
+        name: "image",
+        formData: { node_title, description: content },
+        header,
+        success(res) {
+          resolve(JSON.parse(res.data))
+        },
+        fail: reject
+      })
+    } else {
+      wx.request({
+        url: `${BASE_URL}/issues/${issueId}/nodes/`,
+        method: "POST",
+        header,
+        data: { node_title, description: content },
+        success: res => {
+          if (res.statusCode === 201) resolve(res.data)
+          else reject(res.data)
+        },
+        fail: reject
+      })
+    }
   })
 }
 
