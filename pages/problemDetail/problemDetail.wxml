@@ -2,17 +2,16 @@
 <view class="page">
   <!-- 问题主体 -->
   <view class="card">
-    <view class="header">
-      <view class="user">
-        <image class="avatar" src="{{question.avatar}}" />
-        <text class="nickname">{{question.nickname}}</text>
-      </view>
-
-      <!--状态显示：pending / accepted / resolved -->
-      <text class="status {{question.status}}">
-        {{ statusMap[question.status] }}
-      </text>
+  <view class="header">
+    <view class="user">
+      <image class="avatar" src="{{question.avatar}}" />
+      <text class="nickname">{{question.nickname}}</text>
     </view>
+
+    <view class="status {{question.status}}">
+      {{statusMap[question.status]}}
+    </view>
+  </view>
 
     <view class="content">
       {{question.content}}
