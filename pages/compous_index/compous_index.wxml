@@ -23,12 +23,18 @@
   
   <!-- 搜索框 -->
   <view class="search-container">
-    <view class="search-box">
-      <image src="/pages/compous_index/compous_image/search.png" class="search-icon" />
-      <input placeholder="Search..." class="search-input" />
-    </view>
+  <view class="search-box">
+    <image src="/pages/compous_index/compous_image/search.png" class="search-icon" />
+    <input 
+      placeholder="Search..." 
+      class="search-input"
+      bindinput="onSearchInput"
+      confirm-type="search"
+      bindconfirm="goSearch"
+    />
   </view>
-  
+</view>
+
   <!-- 轮播图 -->
   <swiper class="custom-swiper"
           indicator-dots="{{indicatorDots}}"

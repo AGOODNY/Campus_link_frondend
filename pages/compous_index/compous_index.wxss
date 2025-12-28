@@ -241,7 +241,6 @@
   }
 
 /* ========== 瀑布流样式 ========== */
-/* 关键修复：确保总宽度为660rpx */
 .waterfall-wrapper {
     width: 660rpx;
     margin: 0 auto;

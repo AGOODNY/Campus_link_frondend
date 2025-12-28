@@ -89,6 +89,19 @@ Page({
     this.loadPosts();
   },
 
+  // 监听输入框内容变化
+  onSearchInput(e) {
+    this.searchValue = e.detail.value
+  },
+
+  // 点击搜索框或回车触发跳转
+  goSearch() {
+    const keyword = this.searchValue || ''
+    wx.navigateTo({
+      url: `/pages/life_search/life_search?q=${keyword}`
+    })
+  },
+
   // 切换Tab
   switchTab: function(e) {
     const index = parseInt(e.currentTarget.dataset.index);

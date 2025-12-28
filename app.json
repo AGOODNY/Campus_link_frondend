@@ -12,7 +12,8 @@
     "pages/myProblem/myProblem",
     "pages/problemDetail/problemDetail",
     "pages/compous_index/compous_index",
-    "pages/post_detail/post_detail"
+    "pages/post_detail/post_detail",
+    "pages/life_search/life_search"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f8f8f8",
@@ -36,7 +37,6 @@
         "text": "Study",
         "iconPath": "images/study.png",
         "selectedIconPath": "images/study_selected.png"
-      
       },
       {
         "pagePath": "pages/post/post",

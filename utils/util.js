@@ -346,7 +346,30 @@ function fetchViewHistory() {
   })
 }
 
+const request = (url, method = "GET", data = {}) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: BASE_URL + url,
+      method,
+      data,
+      header: { "Content-Type": "application/json" },
+      success: (res) => {
+        resolve(res.data)
+      },
+      fail: reject
+    })
+  })
+}
 
+//  生活区搜索
+const searchLife = (keyword) => {
+  return request(`/life/search/?q=${keyword}`, "GET")
+}
+
+// 学习区搜索（以后可能用）
+const searchStudy = (keyword) => {
+  return request(`/study/search/?q=${keyword}`, "GET")
+}
 
 /**********************
  * 导出
@@ -368,5 +391,8 @@ module.exports = {
   updateUserProfile,
   fetchMe,
   recordPostView,
-  fetchViewHistory
+  fetchViewHistory,
+
+  searchLife,
+  searchStudy
 }

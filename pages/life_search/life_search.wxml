@@ -1,0 +1,77 @@
+<view class="search-page">
+
+<!-- 顶部搜索框 -->
+<view class="search-input-box">
+  <input placeholder="Search..." bindinput="onInput" bindconfirm="onSearch" confirm-type="search" value="{{keyword}}"/>
+  <button bindtap="onSearch">Search</button>
+</view>
+
+<!-- 瀑布流帖子 -->
+<view class="waterfall-wrapper" wx:if="{{loaded}}">
+  
+  <!-- 左列 -->
+  <view class="waterfall-column left">
+    <view class="post-item" 
+          wx:for="{{leftColumn}}" 
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="goDetail">
+
+      <view class="post-image-wrapper">
+        <image class="post-image" src="{{item.images[0]}}" mode="aspectFill" lazy-load="{{true}}" />
+      </view>
+
+      <view class="post-info">
+        <text class="post-title">{{item.title}}</text>
+        <text class="post-desc">{{item.content}}</text>
+
+        <view class="user-info">
+          <image class="user-avatar" src="{{item.author.avatar || '/images/default.jpg'}}" />
+          <text class="user-name">{{item.author.nickname || 'User'}}</text>
+        </view>
+
+        <view class="post-stats">
+          <text class="stat-item">♥ {{item.like_count || 0}}</text>
+          <text class="stat-item">💬 {{item.comment_count || 0}}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 右列 -->
+  <view class="waterfall-column right">
+    <view class="post-item" 
+          wx:for="{{rightColumn}}" 
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="goDetail">
+
+      <view class="post-image-wrapper">
+        <image class="post-image" src="{{item.images[0]}}" mode="aspectFill" lazy-load="{{true}}" />
+      </view>
+
+      <view class="post-info">
+        <text class="post-title">{{item.title}}</text>
+        <text class="post-desc">{{item.content}}</text>
+
+        <view class="user-info">
+          <image class="user-avatar" src="{{item.author.avatar || '/pages/images/default.jpg'}}" />
+          <text class="user-name">{{item.author.nickname || 'User'}}</text>
+        </view>
+
+        <view class="post-stats">
+          <text class="stat-item">♥ {{item.like_count || 0}}</text>
+          <text class="stat-item">💬 {{item.comment_count || 0}}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>
+
+<!-- 搜索为空时 -->
+<view wx:if="{{loaded && leftColumn.length === 0 && rightColumn.length === 0}}" class="empty">
+  No results
+</view>
+</view>
