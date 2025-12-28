@@ -49,6 +49,19 @@ function fetchMyIssueList() {
   )
 }
 
+function formatTime(t) {
+  if (!t) return ""
+  const date = new Date(t)
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, "0")
+  const d = String(date.getDate()).padStart(2, "0")
+  const hh = String(date.getHours()).padStart(2, "0")
+  const mm = String(date.getMinutes()).padStart(2, "0")
+  const ss = String(date.getSeconds()).padStart(2, "0")
+  return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+}
+
+
 function fetchIssueDetail(id) {
   return request(`/issues/${id}/`).then(d => ({
     id: d.id,
@@ -58,10 +71,11 @@ function fetchIssueDetail(id) {
     nickname: d.nickname,
     status: d.status,
     images: (d.issue_pic || []).map(img => img.image),
+    createTime: d.createTime,       
     nodes: (d.nodes || []).map(n => ({
       staffName: n.operator_name,
       content: n.description,
-      time: n.created_at,
+      time: formatTime(n.created_at), 
       image: n.image || null
     }))
   }))
