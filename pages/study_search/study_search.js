@@ -12,6 +12,7 @@ Page({
     if (options.q) {
       this.setData({ keyword: options.q })
       this.doSearch(options.q)
+    } else {
     }
   },
 
@@ -42,26 +43,32 @@ Page({
   },  
 
   async doSearch(keyword) {
-    if (!keyword) return
-  
-    const res = await api.searchStudy(keyword)
-    let list = res?.data?.list || res?.data?.data?.list || [] 
+    if (!keyword) {
+      return
+    }
+    try {
+      const res = await api.searchStudy(keyword)
+      if (!res) {
+        return
+      }
+      let list = res?.data?.list || res?.data?.data?.list || []
+      list = this.formatPosts(list)
 
-    list = this.formatPosts(list)
+      // 分列显示
+      let left = []
+      let right = []
+      list.forEach((item, idx) => {
+        if (idx % 2 === 0) left.push(item)
+        else right.push(item)
+      })
 
-    // 分列显示
-    let left = []
-    let right = []
-    list.forEach((item, idx) => {
-      if (idx % 2 === 0) left.push(item)
-      else right.push(item)
-    })
-
-    this.setData({
-      leftColumn: left,
-      rightColumn: right,
-      loaded: true
-    })
+      this.setData({
+        leftColumn: left,
+        rightColumn: right,
+        loaded: true
+      })
+    } catch (error) {
+    }
   },
 
   // 点击帖子跳转详情

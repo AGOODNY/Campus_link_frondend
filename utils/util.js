@@ -348,11 +348,11 @@ function fetchViewHistory() {
   })
 }
 
-// 搜索
+// 统一处理 URL
 const request = (url, method = "GET", data = {}) => {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: BASE_URL + url,
+      url: BASE_URL + (url.startsWith('/') ? url : `/${url}`),  
       method,
       data,
       header: { "Content-Type": "application/json" },
@@ -362,12 +362,13 @@ const request = (url, method = "GET", data = {}) => {
   })
 }
 
+
 //  生活区搜索
 const searchLife = (keyword) => {
   return request(`/life/search/?q=${encodeURIComponent(keyword)}`)
 }
 
-// 学习区搜索（以后可能用）
+// 学习区搜索
 const searchStudy = (keyword) => {
   return request(`/study/search/?q=${encodeURIComponent(keyword)}`)
 }

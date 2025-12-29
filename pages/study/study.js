@@ -30,6 +30,9 @@ Page({
     // 是否使用 mock
     useMock: false,
 
+    //搜索
+    searchValue: "", 
+
     // 轮播图（学习区自己的）
     swiperList: [
       {
@@ -57,14 +60,20 @@ Page({
     this.loadPosts()
   },
 
+
+  onSearchInput(e) {
+    this.setData({
+      searchValue: e.detail.value
+    })
+  },
     // 点击搜索框或回车触发跳转
-    goSearch() {
-      const keyword = this.searchValue || ''
-      wx.navigateTo({
-        url: `/pages/study_search/study_search?q=${keyword}`
-      })
-    },
-    
+  goSearch() {
+    const keyword = this.data.searchValue.trim()
+    wx.navigateTo({
+      url: `/pages/study_search/study_search?q=${encodeURIComponent(keyword)}`
+    })
+  },
+      
   // ====== 加载帖子 ======
   async loadPosts() {
     if (this.data.loading || !this.data.hasMore) return
