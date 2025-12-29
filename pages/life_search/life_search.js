@@ -23,32 +23,53 @@ Page({
     this.doSearch(this.data.keyword)
   },
 
+  // 处理搜索返回数据（头像 / 名字 / 图片）
+  formatPosts(list) {
+    return list.map((item, index) => ({
+      id: item.id,
+      title: item.title,
+      desc: item.content,
+      images: item.images?.map(img => api.normalizeImage(img)) || [],
+      user: {
+        name: item.user_name || `用户${index + 1}`,
+        avatar: item.avatar || this.getDefaultAvatar()
+      },
+      likes: item.like_count,
+      comments: item.comment_count,
+      time: item.created_at,
+    }))
+  },
+
   async doSearch(keyword) {
     if (!keyword) return
-  
+    
     const res = await api.searchLife(keyword)
-    const list = res?.data?.list || []
-  
-    // 分列
+    let list = res?.data?.list || []
+
+    list = this.formatPosts(list)
+
+    // 分列显示
     let left = []
     let right = []
-    list.forEach((item, index) => {
-      if (index % 2 === 0) left.push(item)
+    list.forEach((item, idx) => {
+      if (idx % 2 === 0) left.push(item)
       else right.push(item)
     })
-  
+
     this.setData({
       leftColumn: left,
       rightColumn: right,
       loaded: true
     })
   },
-  
 
-  goDetail(e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/life_detail/life_detail?id=${id}`
-    })
-  }
+  onPostTap: function(e) {
+    const postId = e.currentTarget.dataset.id;
+    if (postId) {
+        wx.navigateTo({
+            url: `/pages/post_detail/post_detail?id=${postId}`
+        });
+    }
+  },
 })
+

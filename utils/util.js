@@ -22,7 +22,9 @@ const formatNumber = n => {
 /**********************
  * 基础配置
  **********************/
-const BASE_URL = 'http://172.20.10.3:8000/api'
+const BASE_URL = 'http://172.20.10.3:8000/api'   // API 基础地址
+const BASE_MEDIA_URL = 'http://172.20.10.3:8000' // 媒体文件基础地址（不包含 /api）
+
 /**********************
  * 登录态管理（关键）
  **********************/
@@ -346,6 +348,7 @@ function fetchViewHistory() {
   })
 }
 
+// 搜索
 const request = (url, method = "GET", data = {}) => {
   return new Promise((resolve, reject) => {
     wx.request({
@@ -353,9 +356,7 @@ const request = (url, method = "GET", data = {}) => {
       method,
       data,
       header: { "Content-Type": "application/json" },
-      success: (res) => {
-        resolve(res.data)
-      },
+      success: (res) => resolve(res.data),
       fail: reject
     })
   })
@@ -363,12 +364,19 @@ const request = (url, method = "GET", data = {}) => {
 
 //  生活区搜索
 const searchLife = (keyword) => {
-  return request(`/life/search/?q=${keyword}`, "GET")
+  return request(`/life/search/?q=${encodeURIComponent(keyword)}`)
 }
 
 // 学习区搜索（以后可能用）
 const searchStudy = (keyword) => {
   return request(`/study/search/?q=${keyword}`, "GET")
+}
+
+// 图片 URL 兜底函数（统一拼接完整地址）
+const normalizeImage = (url) => {
+  if (!url) return "";
+  if (url.startsWith("http")) return url;
+  return BASE_MEDIA_URL + url;
 }
 
 /**********************
@@ -394,5 +402,6 @@ module.exports = {
   fetchViewHistory,
 
   searchLife,
-  searchStudy
+  searchStudy,
+  normalizeImage
 }
