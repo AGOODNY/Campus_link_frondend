@@ -57,6 +57,14 @@ Page({
     this.loadPosts()
   },
 
+    // 点击搜索框或回车触发跳转
+    goSearch() {
+      const keyword = this.searchValue || ''
+      wx.navigateTo({
+        url: `/pages/study_search/study_search?q=${keyword}`
+      })
+    },
+    
   // ====== 加载帖子 ======
   async loadPosts() {
     if (this.data.loading || !this.data.hasMore) return

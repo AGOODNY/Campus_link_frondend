@@ -4,7 +4,13 @@
 <view class="search-container">
   <view class="search-box">
     <image src="/pages/study/study_image/search.png" class="search-icon" />
-    <input placeholder="Search study posts..." />
+    <input 
+      placeholder="Search..." 
+      class="search-input"
+      bindinput="onSearchInput"
+      confirm-type="search"
+      bindconfirm="goSearch"
+    />
   </view>
 </view>
 

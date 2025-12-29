@@ -13,7 +13,8 @@
     "pages/problemDetail/problemDetail",
     "pages/compous_index/compous_index",
     "pages/post_detail/post_detail",
-    "pages/life_search/life_search"
+    "pages/life_search/life_search",
+    "pages/study_search/study_search"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f8f8f8",

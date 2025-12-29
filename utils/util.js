@@ -369,7 +369,7 @@ const searchLife = (keyword) => {
 
 // 学习区搜索（以后可能用）
 const searchStudy = (keyword) => {
-  return request(`/study/search/?q=${keyword}`, "GET")
+  return request(`/study/search/?q=${encodeURIComponent(keyword)}`)
 }
 
 // 图片 URL 兜底函数（统一拼接完整地址）

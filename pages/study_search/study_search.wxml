@@ -1,0 +1,86 @@
+<view class="search-page">
+
+<view class="waterfall-wrapper" wx:if="{{loaded}}">
+  
+  <!-- 左列 -->
+  <view class="waterfall-column left">
+    <block wx:for="{{leftColumn}}" wx:key="id">
+      <view class="post-item" data-id="{{item.id}}" bindtap="goDetail">
+
+        <view class="post-image-wrapper">
+          <image 
+            class="post-image"
+            wx:if="{{item.images && item.images.length > 0}}"
+            src="{{item.images[0]}}"
+            mode="aspectFill"
+            lazy-load="true"
+          />
+        </view>
+
+        <view class="post-info">
+          <text class="post-title">{{item.title}}</text>
+          <text class="post-desc">{{item.content}}</text>
+
+          <view class="user-info">
+            <image class="user-avatar"
+                   src="{{item.author.avatar}}"
+                   mode="aspectFill" />
+            <text class="user-name">
+              {{item.author.nickname}}
+            </text>
+          </view>
+
+          <view class="post-stats">
+            <text class="stat-item">♥ {{item.like_count || 0}}</text>
+            <text class="stat-item">💬 {{item.comment_count || 0}}</text>
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+  <!-- 右列 -->
+  <view class="waterfall-column right">
+    <block wx:for="{{rightColumn}}" wx:key="id">
+      <view class="post-item" data-id="{{item.id}}" bindtap="goDetail">
+
+        <view class="post-image-wrapper">
+          <image 
+            class="post-image"
+            wx:if="{{item.images && item.images.length > 0}}"
+            src="{{item.images[0]}}"
+            mode="aspectFill"
+            lazy-load="true"
+          />
+        </view>
+
+        <view class="post-info">
+          <text class="post-title">{{item.title}}</text>
+          <text class="post-desc">{{item.content}}</text>
+
+          <view class="user-info">
+            <image class="user-avatar"
+                   src="{{item.author.avatar}}"
+                   mode="aspectFill" />
+            <text class="user-name">
+              {{item.author.nickname}}
+            </text>
+          </view>
+
+          <view class="post-stats">
+            <text class="stat-item">♥ {{item.like_count || 0}}</text>
+            <text class="stat-item">💬 {{item.comment_count || 0}}</text>
+          </view>
+        </view>
+
+      </view>
+    </block>
+  </view>
+
+</view>
+
+<view wx:if="{{loaded && leftColumn.length === 0 && rightColumn.length === 0}}" class="empty">
+  No results
+</view>
+</view>
