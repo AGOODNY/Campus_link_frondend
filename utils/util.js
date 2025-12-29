@@ -230,11 +230,6 @@ const createPost = (options) => {
 }
 
 
-
-
-
-
-
 /**
  * 更新用户头像和昵称
  */
@@ -380,6 +375,26 @@ const normalizeImage = (url) => {
   return BASE_MEDIA_URL + url;
 }
 
+
+/** 获取当前用户发过的帖子（life + study） */
+const fetchMyPosts = () => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `${BASE_URL}/me/posts/`,
+      method: 'GET',
+      header: {
+        ...authHeader(),               // 修复：补上授权头
+        "Content-Type": "application/json"
+      },
+      success(res) { resolve(res.data) },
+      fail(err) { reject(err) }
+    })
+  })
+}
+
+
+
+
 /**********************
  * 导出
  **********************/
@@ -404,5 +419,6 @@ module.exports = {
 
   searchLife,
   searchStudy,
-  normalizeImage
+  normalizeImage,
+  fetchMyPosts
 }
