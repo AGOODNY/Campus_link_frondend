@@ -1,6 +1,5 @@
 <view class="search-page">
 
-<!-- 瀑布流帖子 -->
 <view class="waterfall-wrapper" wx:if="{{loaded}}">
   
   <!-- 左列 -->
@@ -8,7 +7,6 @@
     <block wx:for="{{leftColumn}}" wx:key="id">
       <view class="post-item" data-id="{{item.id}}" bindtap="goDetail">
 
-        <!-- 帖子封面图 -->
         <view class="post-image-wrapper">
           <image 
             class="post-image"
@@ -19,22 +17,19 @@
           />
         </view>
 
-        <!-- 帖子内容信息 -->
         <view class="post-info">
           <text class="post-title">{{item.title}}</text>
           <text class="post-desc">{{item.content}}</text>
 
-          <!-- 用户信息 -->
           <view class="user-info">
             <image class="user-avatar"
-                   src="{{item.author && item.author.avatar ? item.author.avatar : '../../images/default.jpg'}}"
+                   src="{{item.author.avatar}}"
                    mode="aspectFill" />
             <text class="user-name">
-              {{item.author && item.author.nickname ? item.author.nickname : 'User'}}
+              {{item.author.nickname}}
             </text>
           </view>
 
-          <!-- 统计 -->
           <view class="post-stats">
             <text class="stat-item">♥ {{item.like_count || 0}}</text>
             <text class="stat-item">💬 {{item.comment_count || 0}}</text>
@@ -66,10 +61,10 @@
 
           <view class="user-info">
             <image class="user-avatar"
-                   src="{{item.author && item.author.avatar ? item.author.avatar : '../../images/default.jpg'}}"
+                   src="{{item.author.avatar}}"
                    mode="aspectFill" />
             <text class="user-name">
-              {{item.author && item.author.nickname ? item.author.nickname : 'User'}}
+              {{item.author.nickname}}
             </text>
           </view>
 
@@ -85,7 +80,6 @@
 
 </view>
 
-<!-- 搜索为空 -->
 <view wx:if="{{loaded && leftColumn.length === 0 && rightColumn.length === 0}}" class="empty">
   No results
 </view>

@@ -23,22 +23,23 @@ Page({
     this.doSearch(this.data.keyword)
   },
 
-  // 处理搜索返回数据（头像 / 名字 / 图片）
   formatPosts(list) {
-    return list.map((item, index) => ({
-      id: item.id,
-      title: item.title,
-      desc: item.content,
-      images: item.images?.map(img => api.normalizeImage(img)) || [],
-      user: {
-        name: item.user_name || `用户${index + 1}`,
-        avatar: item.avatar || this.getDefaultAvatar()
-      },
-      likes: item.like_count,
-      comments: item.comment_count,
-      time: item.created_at,
-    }))
-  },
+    return list.map(item => {
+      return {
+        id: item.id,
+        title: item.title,
+        content: item.content,
+        images: item.images?.map(img => api.normalizeImage(img)) || [],
+        author: {
+          nickname: item.user_name || 'A_Guest',
+          avatar: item.avatar ? api.normalizeImage(item.avatar) : '../../images/default.jpg'
+        },
+        like_count: item.like_count,
+        comment_count: item.comment_count,
+        created_at: item.create_time
+      }
+    })
+  },  
 
   async doSearch(keyword) {
     if (!keyword) return
@@ -63,13 +64,12 @@ Page({
     })
   },
 
-  onPostTap: function(e) {
-    const postId = e.currentTarget.dataset.id;
-    if (postId) {
-        wx.navigateTo({
-            url: `/pages/post_detail/post_detail?id=${postId}`
-        });
-    }
-  },
+  // 点击帖子跳转详情
+  goDetail(e) {
+    const id = e.currentTarget.dataset.id
+    if (!id) return
+    wx.navigateTo({
+      url: `/pages/post_detail/post_detail?id=${id}`
+    })
+  }
 })
-
