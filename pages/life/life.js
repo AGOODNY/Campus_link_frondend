@@ -88,6 +88,36 @@ Page({
     this.loadPosts();
   },
 
+  onShow() {
+    // 尝试读取详情页缓存的变更数据
+    const changed = wx.getStorageSync('post_changed')
+    if (changed) {
+      this.updatePostStats(changed)
+      wx.removeStorageSync('post_changed')
+    }
+  },
+  
+  updatePostStats({ postId, like_count, comment_count }) {
+    const update = post => {
+      if (post.id == postId) {
+        if (typeof like_count === 'number') post.likes = like_count
+        if (typeof comment_count === 'number') post.comments = comment_count
+      }
+      return post
+    }
+  
+    const left = this.data.leftColumn.map(update)
+    const right = this.data.rightColumn.map(update)
+    const list = this.data.postList.map(update)
+  
+    this.setData({
+      leftColumn: left,
+      rightColumn: right,
+      postList: list
+    })
+  },
+  
+
   // 监听输入框内容变化
   onSearchInput(e) {
     this.searchValue = e.detail.value

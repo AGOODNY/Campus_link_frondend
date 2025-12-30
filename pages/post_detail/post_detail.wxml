@@ -112,7 +112,7 @@
     class="send-btn {{inputValue ? 'active' : ''}}"
     bindtap="sendComment"
   >
-    发送
+    sent
   </text>
 
 </view>

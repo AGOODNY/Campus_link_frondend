@@ -31,13 +31,25 @@ Page({
 
     // 获取评论列表
     fetchCommentList(postId)
-      .then(res => this.setData({ comments: res.data || [] }))
-      .catch(err => console.error('Failed to get comment list', err))
+      .then(r => {
+        this.setData({
+          comments: r.data || []
+        })
+
+        // 延迟写入 storage，要等到 post 已经加载
+        const post = this.data.post
+        if (post) {
+          wx.setStorageSync('post_changed', {
+            postId,
+            like_count: post.like_count,
+            comment_count: r.data?.length ?? post.comment_count
+          })
+        }
+      })
   },
 
-  // 点赞 / 取消点赞
   likePost() {
-    if (!this.data.postId) returna
+    if (!this.data.postId) return
 
     toggleLikePost(this.data.postId)
       .then(res => {
@@ -45,47 +57,52 @@ Page({
           isLiked: res.liked,
           'post.like_count': res.like_count
         })
+
+        wx.setStorageSync('post_changed', {
+          postId: this.data.postId,
+          like_count: res.like_count,
+          comment_count: this.data.post?.comment_count
+        })
       })
       .catch(() => {
         wx.showToast({ title: 'Like failed', icon: 'none' })
       })
   },
 
-  // 输入评论
   onInput(e) {
     this.setData({ inputValue: e.detail.value })
   },
 
-// 发表评论
-sendComment() {
-  const content = this.data.inputValue.trim()
-  if (!content) {
-    wx.showToast({
-      title: 'Comments cannot be empty',
-      icon: 'none'
-    })
-    return
-  }
-
-  createComment(this.data.postId, content)
-    .then(res => {
-      // ⚠️ 统一评论数据结构（关键）
-      const newComment = {
-        id: res.id || Date.now(),
-        content,
-        nickname: res.nickname || 'me',
-        avatar: res.avatar || '/images/default_avatar.png',
-        create_time: 'just now'
-      }
-
-      this.setData({
-        comments: [...this.data.comments, newComment],
-        inputValue: '',
-        'post.comment_count': (this.data.post.comment_count || 0) + 1
-      })
-    })
-    .catch(() => {
+  sendComment() {
+    const content = this.data.inputValue.trim()
+    if (!content) {
       wx.showToast({ title: 'Comments cannot be empty', icon: 'none' })
-    })
-}
+      return
+    }
+
+    createComment(this.data.postId, content)
+      .then(() => {
+        //评论成功 → 重新获取真实数据
+        Promise.all([
+          fetchCommentList(this.data.postId),
+          fetchPostDetail(this.data.postId)
+        ]).then(([cl, pd]) => {
+          this.setData({
+            comments: cl.data || [],
+            post: pd,
+            inputValue: ''
+          })
+
+          // 同步写入 storage
+          wx.setStorageSync('post_changed', {
+            postId: this.data.postId,
+            like_count: pd.like_count,
+            comment_count: cl.data?.length ?? pd.comment_count
+          })
+        })
+      })
+      .catch(() => {
+        wx.showToast({ title: 'Comments cannot be empty', icon: 'none' })
+      })
+  }
 })
