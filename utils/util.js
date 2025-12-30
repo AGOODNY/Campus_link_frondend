@@ -321,27 +321,26 @@ function recordPostView(postId) {
 
 
 //获取浏览记录列表
-function fetchViewHistory() {
+const fetchViewHistory = () => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${BASE_URL}/me/history/`,
       method: 'GET',
-      header: {
-        'Authorization': 'Token ' + wx.getStorageSync('token')
-      },
+      header: authHeader(),
       success(res) {
-        if (res.statusCode === 200) {
-          resolve(res.data)
-        } else {
-          reject(res)
-        }
+        const list = res.data || []
+        const mapped = list.map(item => ({
+          ...item,
+          images: item.images?.map(img => normalizeImage(img)) ?? [],
+          avatar: normalizeImage(item.avatar),
+        }))
+        resolve(mapped)
       },
-      fail(err) {
-        reject(err)
-      }
+      fail(err) { reject(err) }
     })
   })
 }
+
 
 // 统一处理 URL
 const request = (url, method = "GET", data = {}) => {
@@ -376,22 +375,18 @@ const normalizeImage = (url) => {
 }
 
 
-/** 获取当前用户发过的帖子（life + study） */
+/** * 获取当前用户发过的帖子（life + study） */
 const fetchMyPosts = () => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${BASE_URL}/me/posts/`,
       method: 'GET',
-      header: {
-        ...authHeader(),               // 修复：补上授权头
-        "Content-Type": "application/json"
-      },
+      header: authHeader(),
       success(res) { resolve(res.data) },
       fail(err) { reject(err) }
     })
   })
 }
-
 
 
 

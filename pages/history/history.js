@@ -1,47 +1,23 @@
+//浏览记录js的真版本
+const { fetchViewHistory } = require('../../utils/util')
 
-//history.js的假数据版本
 Page({
   data: {
     leftList: [],
     rightList: []
   },
 
-  onLoad() {
-    const list = [
-      {
-        id: 1,
-        title: 'This little kitten is really cute!',
-        cover: '/pages/history/images/9.jpg',
-        avatar: '/pages/history/images/8.png',
-        nickname: 'Ori'
-      },
-      {
-        id: 2,
-        title: 'LONG TIME NO SEE',
-        cover: '/pages/history/images/10.jpg',
-        avatar: '/pages/history/images/6.png',
-        nickname: 'Yara'
-      },
-      {
-        id: 3,
-        title: 'Can someone tell me why my code isnt working properly?',
-        cover: '/pages/history/images/11.png',
-        avatar: '/pages/history/images/6.png',
-        nickname: 'Yara'
-      },
-      {
-        id: 4,
-        title: 'TEST',
-        cover: '/pages/history/images/5.png',
-        avatar: '/pages/history/images/5.png',
-        nickname: 'Yara'
-      }
-    ]
-
-    this.splitWaterfall(list)
+  onShow() {
+    this.loadHistory()
   },
 
-  /* 简单分配左右列 */
+  loadHistory() {
+    fetchViewHistory().then(list => {
+      this.splitWaterfall(list)
+    }).catch(err => console.error(err))
+  },
+  
+
   splitWaterfall(list) {
     const left = []
     const right = []
@@ -56,10 +32,12 @@ Page({
     })
   },
 
+  // 点击帖子跳转详情
   goDetail(e) {
     const id = e.currentTarget.dataset.id
+    if (!id) return
     wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`
+      url: `/pages/post_detail/post_detail?id=${id}`
     })
   }
 })

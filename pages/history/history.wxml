@@ -1,8 +1,12 @@
+<!-- pages/history/history.wxml -->
 <view class="page">
   <view class="head">History</view>
 
   <!-- 空状态 -->
-  <view class="empty" wx:if="{{leftList.length === 0 && rightList.length === 0}}">
+  <view
+    class="empty"
+    wx:if="{{leftList.length === 0 && rightList.length === 0}}"
+  >
     <text class="empty-text">No history.</text>
   </view>
 
@@ -14,15 +18,22 @@
       <block wx:for="{{leftList}}" wx:key="id">
         <view class="card" bindtap="goDetail" data-id="{{item.id}}">
 
-          <!-- 封面图：直接使用 cover -->
-          <image class="cover" src="{{item.cover}}" mode="widthFix" />
+          <!-- 封面图：取第一张图片 -->
+          <image
+            class="cover"
+            src="{{item.images && item.images.length ? item.images[0] : '/images/default.jpg'}}"
+            mode="widthFix"
+          />
 
           <view class="content">
             <view class="title">{{item.title}}</view>
 
             <view class="user">
-              <image class="avatar" src="{{item.avatar}}" />
-              <text class="nickname">{{item.nickname}}</text>
+              <image
+                class="avatar"
+                src="{{item.avatar || '/images/default_avatar.png'}}"
+              />
+              <text class="nickname">{{item.user_name}}</text>
             </view>
           </view>
 
@@ -35,15 +46,22 @@
       <block wx:for="{{rightList}}" wx:key="id">
         <view class="card" bindtap="goDetail" data-id="{{item.id}}">
 
-          <!-- 封面图：直接使用 cover -->
-          <image class="cover" src="{{item.cover}}" mode="widthFix" />
+          <!-- 封面图：取第一张图片 -->
+          <image
+            class="cover"
+            src="{{item.images && item.images.length ? item.images[0] : '/images/default.jpg'}}"
+            mode="widthFix"
+          />
 
           <view class="content">
             <view class="title">{{item.title}}</view>
 
             <view class="user">
-              <image class="avatar" src="{{item.avatar}}" />
-              <text class="nickname">{{item.nickname}}</text>
+              <image
+                class="avatar"
+                src="{{item.avatar || '/images/default_avatar.png'}}"
+              />
+              <text class="nickname">{{item.user_name}}</text>
             </view>
           </view>
 
