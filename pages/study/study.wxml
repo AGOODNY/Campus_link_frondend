@@ -20,8 +20,7 @@
           autoplay="{{autoplay}}"
           interval="{{interval}}"
           duration="{{duration}}"
-          circular="{{circular}}"
-          bindchange="onSwiperChange">
+          circular="{{circular}}">
     <swiper-item wx:for="{{swiperList}}" wx:key="id">
       <image src="{{item.imageUrl}}" class="swiper-image" 
              data-index="{{index}}" bindtap="onSwiperTap" mode="aspectFill" />

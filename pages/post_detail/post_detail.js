@@ -47,7 +47,7 @@ Page({
         })
       })
       .catch(() => {
-        wx.showToast({ title: '点赞失败', icon: 'none' })
+        wx.showToast({ title: 'Like failed', icon: 'none' })
       })
   },
 
@@ -61,7 +61,7 @@ sendComment() {
   const content = this.data.inputValue.trim()
   if (!content) {
     wx.showToast({
-      title: '评论不能为空',
+      title: 'Comments cannot be empty',
       icon: 'none'
     })
     return
@@ -73,9 +73,9 @@ sendComment() {
       const newComment = {
         id: res.id || Date.now(),
         content,
-        nickname: res.nickname || '我',
+        nickname: res.nickname || 'me',
         avatar: res.avatar || '/images/default_avatar.png',
-        create_time: '刚刚'
+        create_time: 'just now'
       }
 
       this.setData({
@@ -85,7 +85,7 @@ sendComment() {
       })
     })
     .catch(() => {
-      wx.showToast({ title: '评论失败', icon: 'none' })
+      wx.showToast({ title: 'Comments cannot be empty', icon: 'none' })
     })
 }
 })
