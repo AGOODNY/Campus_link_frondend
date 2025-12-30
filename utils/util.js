@@ -141,37 +141,37 @@ const toggleLikePost = (postId) => {
 
 
 /**
- * 微信登录
+ * 登录
  */
-const wechatLogin = (role) => {
-  return new Promise((resolve, reject) => {
-    wx.login({
-      success(res) {
-        if (!res.code) {
-          reject('wx.login failed')
-          return
-        }
 
-        wx.request({
-          url: `${BASE_URL}/login/`,
-          method: 'POST',
-          data: {
-            openid: res.code,
-            role: role
-          },
-          success(resp) {
-            //登录成功立刻保存登录态
-            saveLoginInfo(resp.data)
-            resolve(resp.data)
-          },
-          fail(err) {
-            reject(err)
-          }
-        })
+
+const apiLogin = (username, password) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `${BASE_URL}/login/`,
+      method: 'POST',
+      data: { username, password },
+      success(res) {
+        if (res.data.code !== 0) return reject(res.data)
+        saveLoginInfo(res.data)
+        resolve(res.data)
       },
-      fail(err) {
-        reject(err)
-      }
+      fail(err) { reject(err) }
+    })
+  })
+}
+
+const apiRegister = (username, password, role) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `${BASE_URL}/register/`,
+      method: 'POST',
+      data: { username, password, role },
+      success(res) {
+        if (res.data.code !== 0) return reject(res.data)
+        resolve(res.data)
+      },
+      fail(err) { reject(err) }
     })
   })
 }
@@ -402,7 +402,8 @@ module.exports = {
   createComment,
   toggleLikePost,
 
-  wechatLogin,
+  apiLogin, 
+  apiRegister,
   saveLoginInfo,
   getToken,
 
