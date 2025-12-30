@@ -35,7 +35,7 @@ Page({
         console.log('Preparing to jump to homepage...')
         
         wx.switchTab({ 
-          url: '/pages/compous_index/compous_index' 
+          url: '/pages/life/life' 
         })
       })
       .catch(err => {

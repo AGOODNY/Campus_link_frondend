@@ -37,7 +37,7 @@ Page({
 
   // 点赞 / 取消点赞
   likePost() {
-    if (!this.data.postId) return
+    if (!this.data.postId) returna
 
     toggleLikePost(this.data.postId)
       .then(res => {

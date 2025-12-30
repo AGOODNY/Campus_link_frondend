@@ -1,4 +1,3 @@
-// pages/compous_index/compous_index.js
 const { fetchPostList } = require('../../utils/util')
 
 
@@ -44,35 +43,35 @@ Page({
     swiperList: [
       {
         id: 1,
-        imageUrl: '/pages/compous_index/compous_image/2.png',
+        imageUrl: '/pages/life/life_image/2.png',
         linkUrl: '',
         title: "Advertise Here",
         desc: "Live your best campus life"
       },
       {
         id: 2,
-        imageUrl: '/pages/compous_index/compous_image/3.png',
+        imageUrl: '/pages/life/life_image/3.png',
         linkUrl: '',
         title: "Advertise Here",
         desc: "Live your best campus life"
       },
       {
         id: 3,
-        imageUrl: '/pages/compous_index/compous_image/4.png',
+        imageUrl: '/pages/life/life_image/4.png',
         linkUrl: '',
         title: "Advertise Here",
         desc: "Live your best campus life"
       },
       {
         id: 4,
-        imageUrl: '/pages/compous_index/compous_image/5.png',
+        imageUrl: '/pages/life/life_image/5.png',
         linkUrl: '',
         title: "Advertise Here",
         desc: "Live your best campus life"
       },
       {
         id: 5,
-        imageUrl: '/pages/compous_index/compous_image/6.png',
+        imageUrl: '/pages/life/life_image/6.png',
         linkUrl: '',
         title: "Advertise Here",
         desc: "Live your best campus life"

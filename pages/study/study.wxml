@@ -36,7 +36,7 @@
   <view class="recommendation-container">
   <view class="recommendation-wrapper" bindtap="toggleSortMenu">
     <image 
-      src="/pages/compous_index/compous_image/sort.png" 
+      src="/pages/life/life_image/sort.png" 
       class="recommend-icon" 
     />
     <text class="recommend-text">Recommendation</text>

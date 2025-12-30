@@ -11,7 +11,7 @@
     "pages/myPost/myPost",
     "pages/myProblem/myProblem",
     "pages/problemDetail/problemDetail",
-    "pages/compous_index/compous_index",
+    "pages/life/life",
     "pages/post_detail/post_detail",
     "pages/life_search/life_search",
     "pages/study_search/study_search",
@@ -29,7 +29,7 @@
     "selectedColor": "#1e90ff",
     "list": [
       {
-        "pagePath": "pages/compous_index/compous_index",
+        "pagePath": "pages/life/life",
         "text": "Life",
         "iconPath": "images/life.png",
         "selectedIconPath": "images/life_selected.png"

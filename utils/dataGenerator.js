@@ -3,23 +3,23 @@
 
 const IMAGE_LIBRARY = {
     campus: [
-      '/pages/compous_index/compous_post_image/cat.jpg',// 校猫
-      '/pages/compous_index/compous_post_image/tree.jpg'//树
+      '/pages/life/life_post_image/cat.jpg',// 校猫
+      '/pages/life/life_post_image/tree.jpg'//树
       
     ],
     food: [
-      '/pages/compous_index/compous_post_image/food.jpg', // 捞德喜
-      '/pages/compous_index/compous_post_image/icecream.jpg'//野人先生
+      '/pages/life/life_post_image/food.jpg', // 捞德喜
+      '/pages/life/life_post_image/icecream.jpg'//野人先生
     ],
     sports: [
-      '/pages/compous_index/compous_post_image/sports.jpg'//排球
+      '/pages/life/life_post_image/sports.jpg'//排球
     ]
   };
   
   // 用户数据
   const USERS = [
-    { name: 'Lee', avatar: '/pages/compous_index/compous_post_image/avatar2.jpg' },
-    { name: 'GONG', avatar: '/pages/compous_index/compous_post_image/avatar1.jpg' },
+    { name: 'Lee', avatar: '/pages/life/life_post_image/avatar2.jpg' },
+    { name: 'GONG', avatar: '/pages/life/life_post_image/avatar1.jpg' },
     
   ];
   
