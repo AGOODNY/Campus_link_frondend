@@ -1,5 +1,3 @@
-/* pages/myPost/myPost.wxss */
-/* pages/history/history.wxss */
 page {
   background-color: #f5f6f7;
 }
