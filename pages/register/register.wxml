@@ -1,18 +1,27 @@
+<!-- pages/register/register.wxml -->
 <view class="container">
-  <view class="form-box">
+  <view class="card">
+    <text class="title">Register</text>
+
     <text class="label">Account</text>
-    <input placeholder="Enter username" bindinput="onUsername" />
+    <input class="input" placeholder="Enter account" bindinput="onUsername" />
 
     <text class="label">Password</text>
-    <input placeholder="Enter password" password bindinput="onPassword" />
+    <input class="input" placeholder="Enter password" password bindinput="onPassword" />
 
     <text class="label">Role</text>
-    <radio-group bindchange="onRoleChange">
-      <label><radio value="student" /> Student</label>
-      <label><radio value="staff" /> Staff</label>
+    <radio-group class="radio-box" bindchange="onRoleChange">
+      <label class="radio-item">
+        <radio value="student" /> Student
+      </label>
+      <label class="radio-item">
+        <radio value="staff" /> Staff
+      </label>
     </radio-group>
+  </view>
 
-    <button bindtap="register">Register</button>
-    <button class="link" bindtap="gotoLogin">Already have an account?</button>
+  <view class="btn-row">
+    <button class="btn-primary" bindtap="register">Confirm</button>
+    <button class="btn-outline" bindtap="gotoLogin">Login</button>
   </view>
 </view>

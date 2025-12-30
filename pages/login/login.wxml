@@ -1,12 +1,20 @@
+<!-- pages/login/login.wxml -->
 <view class="container">
-  <view class="form-box">
+  <!-- 悬浮卡片 -->
+  <view class="card">
+    <text class="title">Log In</text>
+
     <text class="label">Account</text>
-    <input placeholder="Enter username" bindinput="onUsername" />
+    <input class="input" placeholder="Enter account" bindinput="onUsername" />
 
     <text class="label">Password</text>
-    <input placeholder="Enter password" password bindinput="onPassword" />
+    <input class="input" placeholder="Enter password" password bindinput="onPassword" />
 
-    <button bindtap="login">Log in</button>
-    <button class="link" bindtap="gotoRegister">Register</button>
+  </view>
+
+  <!-- 底部按钮横向排列 -->
+  <view class="btn-row">
+    <button class="btn-outline" bindtap="gotoRegister">Register</button>
+    <button class="btn-primary" bindtap="login">Login</button>
   </view>
 </view>

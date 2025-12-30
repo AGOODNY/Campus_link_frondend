@@ -35,7 +35,7 @@ const BASE_MEDIA_URL = 'http://172.20.10.3:8000' // 媒体文件基础地址（�
  */
 const saveLoginInfo = (loginResp) => {
   if (!loginResp || !loginResp.data || !loginResp.data.token) {
-    console.error('登录返回数据不完整', loginResp)
+    console.error('The data returned from the login is incomplete', loginResp)
     return
   }
 
@@ -143,16 +143,22 @@ const toggleLikePost = (postId) => {
 /**
  * 登录
  */
-
-
 const apiLogin = (username, password) => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${BASE_URL}/login/`,
       method: 'POST',
-      data: { username, password },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        username: username,
+        password: password
+      },
       success(res) {
-        if (res.data.code !== 0) return reject(res.data)
+        if (res.statusCode !== 200 || res.data.code !== 0) {
+          return reject({ message: res.data?.message || "Login failed" })
+        }
         saveLoginInfo(res.data)
         resolve(res.data)
       },
@@ -166,15 +172,27 @@ const apiRegister = (username, password, role) => {
     wx.request({
       url: `${BASE_URL}/register/`,
       method: 'POST',
-      data: { username, password, role },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        username: username,
+        password: password,
+        role: role
+      },
       success(res) {
-        if (res.data.code !== 0) return reject(res.data)
+        if (res.statusCode !== 200 || res.data.code !== 0) {
+          return reject({ message: res.data?.message || "Register failed" })
+        }
         resolve(res.data)
       },
       fail(err) { reject(err) }
     })
   })
 }
+
+
+
 
 /**
  * 统一发帖接口（最终版 — 支持 study / life / issue，单图上传）
